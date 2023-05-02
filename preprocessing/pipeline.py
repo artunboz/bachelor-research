@@ -8,7 +8,7 @@ from paths import DATA_DIR
 from preprocessing.panel_extractor import PanelExtractor
 from preprocessing.text_cropper import TextCropper
 
-input_folder_path = f"{DATA_DIR}/dilbert_comics_png"
+input_folder_path = f"{DATA_DIR}/dilbert_comics_original"
 output_folder_path = f"{DATA_DIR}/cleaned_panels"
 
 if not os.path.exists(input_folder_path):
