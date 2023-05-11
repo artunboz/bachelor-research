@@ -66,7 +66,7 @@ class HOGFeature(AbstractFeature):
             channel_axis=self.channel_axis,
         )
 
-    def compute_features_images(self, image_folder_path: str) -> np.ndarray:
+    def compute_features(self, image_folder_path: str) -> np.ndarray:
         """Computes HOG features for all the images found in the folder located at the
         given path and return them in a 2-d numpy array of shape (n_images, n_features).
 
