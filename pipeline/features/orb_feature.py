@@ -5,7 +5,7 @@ import numpy as np
 from tqdm import tqdm
 
 from pipeline.features.abstract_feature import AbstractFeature
-from pipeline.features.feature_vocabulary import get_bof_features
+from pipeline.features.bag_of_features import get_bof_features
 
 
 class ORBFeature(AbstractFeature):
@@ -18,7 +18,11 @@ class ORBFeature(AbstractFeature):
         )
 
     def compute_features(
-        self, image_folder_path: str, eps: float, min_samples: int, norm: str
+        self,
+        image_folder_path: str,
+        eps: float = 100.0,
+        min_samples: int = 20,
+        norm: str = "L2",
     ) -> np.ndarray:
         sorted_image_names: list[str] = sorted(os.listdir(image_folder_path))
         descriptors_dict: dict[str, np.ndarray] = {}
