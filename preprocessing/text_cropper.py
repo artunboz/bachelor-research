@@ -32,7 +32,7 @@ class TextCropper:
     def detect_text_blocks(
         path: str, block_confidence: float
     ) -> list[tuple[int, int, int, int]]:
-        """Detect text blocks in the image found ion the given path. Detected text
+        """Detect text blocks in the image found on the given path. Detected text
         blocks have a confidence greater than the given block confidence.
 
         :param path: A string indicating the path to the image.
