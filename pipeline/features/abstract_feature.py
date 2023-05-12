@@ -4,14 +4,6 @@ import numpy as np
 
 
 class AbstractFeature(ABC):
-    # @abstractmethod
-    # def compute_features_image(self, image: np.ndarray) -> np.ndarray:
-    #     """Computes features for the given image.
-    #
-    #     :param image: A numpy ndarray representing the image.
-    #     :return: A numpy ndarray containing the computed features.
-    #     """
-
     @abstractmethod
     def compute_features(self, image_folder_path: str) -> np.ndarray:
         """Computes features for all the images found in the folder located at the given
