@@ -5,7 +5,7 @@ import numpy as np
 from tqdm import tqdm
 
 from pipeline.features.abstract_feature import AbstractFeature
-from pipeline.features.bag_of_features import get_bof_features
+from pipeline.features.bag_of_visual_words import get_bof_features
 
 
 class ORBFeature(AbstractFeature):
