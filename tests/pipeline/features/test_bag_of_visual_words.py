@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from pipeline.features import bag_of_visual_words
+from pipeline.features.local_features import bag_of_visual_words
 
 
 @pytest.fixture

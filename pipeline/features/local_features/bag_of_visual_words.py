@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
+from tqdm import tqdm
 
 
 def compute_bovw_features(
@@ -62,7 +63,7 @@ def _find_optimal_cluster_count(
     """
     kmeans_list: list[KMeans] = []
     scores: list[float] = []
-    for n in range(*n_clusters_range):
+    for n in tqdm(range(*n_clusters_range), desc="Finding optimal n_clusters"):
         kmeans: KMeans = _cluster_descriptors(descriptors, n)
         score: float = silhouette_score(descriptors, kmeans.labels_)
 
