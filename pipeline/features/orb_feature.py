@@ -60,9 +60,11 @@ class ORBFeature(AbstractFeature):
 
             descriptors_dict[image_name] = descriptors
 
+        print("Computing bag of features...")
         features_dict, feature_dim = get_bof_features(
             descriptors_dict, eps, min_samples, norm
         )
+        print("Bag of features computed.")
         features: np.ndarray = np.empty(
             shape=(len(os.listdir(image_folder_path)), feature_dim)
         )

@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.cluster import DBSCAN
+import hdbscan
 
 
 def get_bof_features(
@@ -28,10 +29,12 @@ def get_bof_features(
     stacked_descriptors: np.ndarray = np.concatenate(
         list(descriptors_dict.values()), axis=0
     )
-    db: DBSCAN = DBSCAN(eps=eps, min_samples=min_samples).fit(stacked_descriptors)
-    n_clusters: int = len(np.unique(db.labels_))
+    # db: DBSCAN = DBSCAN(eps=eps, min_samples=min_samples).fit(stacked_descriptors)
+    clusterer = hdbscan.HDBSCAN(cluster_selection_epsilon=1)
+    clusterer.fit(stacked_descriptors)
+    n_clusters: int = len(np.unique(clusterer.labels_))
     # Remove the fuzzy label cluster because it is not really a cluster
-    if -1 in db.labels_:
+    if -1 in clusterer.labels_:
         n_clusters -= 1
 
     features_dict: dict[str, np.ndarray] = {}
@@ -39,7 +42,7 @@ def get_bof_features(
     for image_name, des_len in des_length_dict.items():
         bag_of_features: np.ndarray = np.zeros(n_clusters)
         contains_cluster: bool = False
-        for label in db.labels_[curr : curr + des_len]:
+        for label in clusterer.labels_[curr : curr + des_len]:
             if label == -1:
                 continue
             else:
@@ -63,7 +66,7 @@ def get_bof_features(
         features_dict[image_name] = bag_of_features
         curr += des_len
 
-    unique, counts = np.unique(db.labels_, return_counts=True)
+    unique, counts = np.unique(clusterer.labels_, return_counts=True)
     counts: dict[int, int] = dict(zip(unique, counts))
     if -1 in counts:
         print(f"Fuzzy count: {counts[-1]}")

@@ -11,7 +11,7 @@ from pipeline.dimensionality_reduction.abstract_reducer import AbstractReducer
 
 class AutoencoderReducer(AbstractReducer):
     def __init__(
-        self, actual_dim: int, latent_dim: int, hidden_layers: list[int]
+        self, actual_dim: int, latent_dim: int, hidden_layers: list[int] = None
     ) -> None:
         """Inits an AutoencoderReducer instance.
 
@@ -19,11 +19,14 @@ class AutoencoderReducer(AbstractReducer):
             data.
         :param latent_dim: An integer indicating the number of dimensions to encode to.
         :param hidden_layers: A list of integers indicating the number of neurons in the
-            layers up to the final encoder layer.
+            layers up to the final encoder layer. Defaults to None in which case no
+            extra layers are added.
         """
         self.actual_dim: int = actual_dim
         self.latent_dim: int = latent_dim
-        self.hidden_layers: list[int] = hidden_layers
+        self.hidden_layers: list[int] = (
+            hidden_layers if hidden_layers is not None else []
+        )
         layers: list[int] = [*self.hidden_layers, self.latent_dim]
         self.autoencoder: Autoencoder = Autoencoder(
             layers=layers, output_units=self.actual_dim
@@ -39,14 +42,20 @@ class AutoencoderReducer(AbstractReducer):
         :return: A 2-d numpy array of shape (n_samples, n_reduced_features) containing
             the samples in a latent space with a lower dimensionality.
         """
-        # Minmax scaling on each row
-        scaled_samples: np.ndarray = self.standard_scaler.fit_transform(samples.T).T
-        train, test = train_test_split(scaled_samples, test_size=0.1)
+        train, test = train_test_split(samples, test_size=0.1)
+        scaled_train: np.ndarray = self.standard_scaler.fit_transform(train)
+        scaled_test: np.ndarray = self.standard_scaler.transform(test)
         self.autoencoder.fit(
-            train, train, epochs=15, batch_size=32, validation_data=(test, test)
+            scaled_train,
+            scaled_train,
+            epochs=10,
+            batch_size=32,
+            validation_data=(scaled_test, scaled_test),
         )
 
-        return self.autoencoder.encoder.predict(scaled_samples, batch_size=32)
+        return self.autoencoder.encoder.predict(
+            self.standard_scaler.transform(samples), batch_size=32
+        )
 
 
 class Autoencoder(Model):
