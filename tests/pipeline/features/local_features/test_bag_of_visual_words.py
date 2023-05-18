@@ -32,8 +32,9 @@ def test__get_stacked_descriptors(example_descriptor_list):
 
 
 def test__find_optimal_cluster_count(example_descriptors):
+    n_clusters_space = [2, 3, 4, 5, 6]
     optimal_kmeans = bag_of_visual_words._find_optimal_cluster_count(
-        example_descriptors, n_clusters_range=(2, 7)
+        example_descriptors, n_clusters_space=n_clusters_space
     )
 
     assert optimal_kmeans.n_clusters == 3
@@ -41,7 +42,7 @@ def test__find_optimal_cluster_count(example_descriptors):
 
 def test__extract_features(example_descriptors, example_descriptor_list):
     actual_features = bag_of_visual_words._extract_features(
-        example_descriptor_list, [0, 0, 0, 2, 2, 2, 1], 3
+        example_descriptor_list, np.array([0, 0, 0, 2, 2, 2, 1]), 3
     )
     expected_features = np.array([[2, 0, 0], [1, 0, 2], [0, 1, 1]])
 
