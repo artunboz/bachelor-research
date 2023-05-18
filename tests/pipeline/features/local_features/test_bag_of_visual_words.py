@@ -46,3 +46,13 @@ def test__extract_features(example_descriptors, example_descriptor_list):
     expected_features = np.array([[2, 0, 0], [1, 0, 2], [0, 1, 1]])
 
     np.testing.assert_array_equal(actual_features, expected_features)
+
+
+def test__l1_normalize():
+    test_matrix = np.array([[1, 3, 4], [0, 2, 0], [1, 1, 1]])
+    expected_normalized_matrix = np.array(
+        [[0.125, 0.375, 0.5], [0, 1, 0], [1 / 3, 1 / 3, 1 / 3]]
+    )
+    actual_normalized_matrix = bag_of_visual_words._l1_normalize(test_matrix)
+
+    np.testing.assert_array_equal(actual_normalized_matrix, expected_normalized_matrix)

@@ -33,7 +33,7 @@ class SIFTFeature(AbstractLocalFeature):
             filter out weak features in semi-uniform (low-contrast) regions. The larger
             the threshold, the fewer features are produced by the detector.
         :param edge_threshold: A float indicating the threshold used to filter out
-            edge-like features. The larger the edgeThreshold, the less features are
+            edge-like features. The larger the edgeThreshold, the fewer features are
             filtered out (more features are retained).
         :param sigma: A float indicating the sigma of the Gaussian applied to the input
             image at the octave #0.
