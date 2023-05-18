@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 def compute_bovw_features(
-    descriptor_list: list[np.ndarray], n_clusters_range: tuple[int, int]
+    descriptor_list: list[np.ndarray], n_clusters_space: list[int]
 ) -> np.ndarray:
     """Computes bag-of-visual-words features for the given list of descriptors. The list
     contains 2-d numpy arrays of shape (n_keypoints, fixed_feature_length) that contain
@@ -15,15 +15,12 @@ def compute_bovw_features(
 
     :param descriptor_list: A list of 2-d numpy arrays of shape
         (n_keypoints, fixed_feature_length).
-    :param n_clusters_range: A 2-tuple that indicates the start (inclusive) and stop
-        (exclusive) values for the range of possible cluster count to find the optimal
-        count from.
-    :return: A 2-d numpy array of shape (len(descriptor_list), optimal_cluster_count)
-        containing the features.
+    :param n_clusters_space: A list of integers representing the search space for the
+        optimal n_clusters value based on the silhouette score.
     """
     all_descriptors: np.ndarray = _get_stacked_descriptors(descriptor_list)
     optimal_kmeans: KMeans = _find_optimal_cluster_count(
-        all_descriptors, n_clusters_range
+        all_descriptors, n_clusters_space
     )
     bovw_features: np.ndarray = _extract_features(
         descriptor_list, optimal_kmeans.labels_, optimal_kmeans.n_clusters
@@ -46,22 +43,21 @@ def _get_stacked_descriptors(descriptor_list: list[np.ndarray]) -> np.ndarray:
 
 
 def _find_optimal_cluster_count(
-    descriptors: np.ndarray, n_clusters_range: tuple[int, int]
+    descriptors: np.ndarray, n_clusters_space: list[int]
 ) -> KMeans:
-    """Finds optimal n_cluster value from the given range based on the silhouette score
+    """Finds optimal n_cluster value from the given space based on the silhouette score
     of the resulting clusters.
 
     :param descriptors: A 2-d numpy array of shape
         (n_descriptors, fixed_descriptor_length).
-    :param n_clusters_range: A 2-tuple that indicates the start (inclusive) and stop
-        (exclusive) values for the range of possible cluster count to find the optimal
-        count from.
+    :param n_clusters_space: A list of integers representing the search space for the
+        optimal n_clusters value based on the silhouette score.
     :return: An instance of sklearn.cluster.KMeans that is fitted on the given
         descriptors using the optimal n_clusters value.
     """
     kmeans_list: list[KMeans] = []
     scores: list[float] = []
-    for n in tqdm(range(*n_clusters_range), desc="Finding optimal n_clusters"):
+    for n in tqdm(n_clusters_space, desc="Finding optimal n_clusters"):
         kmeans: KMeans = _cluster_descriptors(descriptors, n)
         score: float = silhouette_score(descriptors, kmeans.labels_)
 

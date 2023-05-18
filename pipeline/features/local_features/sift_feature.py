@@ -8,7 +8,7 @@ class SIFTFeature(AbstractLocalFeature):
     def __init__(
         self,
         resize_size: tuple[int, int],
-        bovw_n_clusters_range: tuple[int, int],
+        bovw_n_clusters_space: list[int],
         n_features: int = 20,
         n_octave_layers: int = 3,
         contrast_threshold: float = 0.09,
@@ -23,9 +23,8 @@ class SIFTFeature(AbstractLocalFeature):
 
         :param resize_size: A 2-tuple of integers indicating the pixel width and height
             of the resized image.
-        :param bovw_n_clusters_range: A 2-tuple of integers indicating the start
-            (inclusive) and stop (exclusive) for the range of values to try for the
-            number of clusters used for bag-of-visual-words.
+        :param bovw_n_clusters_space: A list of integers representing the search space
+            for the optimal n_clusters value based on the silhouette score.
         :param n_features: An integer indicating the number of best features to retain.
         :param n_octave_layers: An integer indicating the number of layers in each
             octave.
@@ -41,7 +40,7 @@ class SIFTFeature(AbstractLocalFeature):
             upscaling in the scale pyramid, which maps index x to 2x. This prevents
             localization bias. The option is disabled by default.
         """
-        super().__init__(resize_size, bovw_n_clusters_range)
+        super().__init__(resize_size, bovw_n_clusters_space)
         self.sift: cv.SIFT = cv.SIFT_create(
             nfeatures=n_features,
             nOctaveLayers=n_octave_layers,
