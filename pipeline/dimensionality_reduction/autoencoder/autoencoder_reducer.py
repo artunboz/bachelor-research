@@ -48,5 +48,5 @@ class AutoencoderReducer(AbstractReducer):
         )
 
         return self.autoencoder.encoder.predict(
-            self.standard_scaler.transform(samples), batch_size=32
+            self.standard_scaler.transform(samples), batch_size=batch_size
         )
