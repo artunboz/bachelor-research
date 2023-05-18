@@ -3,10 +3,12 @@ from skimage import feature
 from skimage import io
 from skimage import transform
 
-from pipeline.features.abstract_feature import AbstractFeature
+from pipeline.features.global_features.abstract_global_feature import (
+    AbstractGlobalFeature,
+)
 
 
-class LBPFeature(AbstractFeature):
+class LBPFeature(AbstractGlobalFeature):
     def __init__(
         self,
         resize_size: tuple[int, int],

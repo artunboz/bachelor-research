@@ -3,7 +3,6 @@ from typing import cast
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
 
 
@@ -29,8 +28,7 @@ def compute_bovw_features(
     bovw_features: np.ndarray = _extract_features(
         descriptor_list, optimal_kmeans.labels_, optimal_kmeans.n_clusters
     )
-    scaler: StandardScaler = StandardScaler()
-    return scaler.fit_transform(bovw_features)
+    return _l1_normalize(bovw_features)
 
 
 def _get_stacked_descriptors(descriptor_list: list[np.ndarray]) -> np.ndarray:
@@ -112,3 +110,14 @@ def _extract_features(
         curr += n_labels
 
     return im_features
+
+
+def _l1_normalize(histograms: np.ndarray) -> np.ndarray:
+    """Normalizes the rows of the given 2-d numpy array using the L1 norm, i.e. the
+    normalized rows sum to 1.
+
+    :param histograms: A 2-d numpy array.
+    :return: The l1-normalized 2-d numpy array.
+    """
+    rows_sums: np.ndarray = histograms.sum(axis=1, keepdims=True)
+    return histograms / rows_sums
