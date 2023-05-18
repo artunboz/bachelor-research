@@ -8,7 +8,7 @@ class ORBFeature(AbstractLocalFeature):
     def __init__(
         self,
         resize_size: tuple[int, int],
-        bovw_n_clusters_range: tuple[int, int],
+        bovw_n_clusters_space: list[int],
         n_features: int = 500,
         scale_factor: float = 1.2,
         n_levels: int = 8,
@@ -24,9 +24,8 @@ class ORBFeature(AbstractLocalFeature):
 
         :param resize_size: A 2-tuple of integers indicating the pixel width and height
             of the resized image.
-        :param bovw_n_clusters_range: A 2-tuple of integers indicating the start
-            (inclusive) and stop (exclusive) for the range of values to try for the
-            number of clusters used for bag-of-visual-words.
+        :param bovw_n_clusters_space: A list of integers representing the search space
+            for the optimal n_clusters value based on the silhouette score.
         :param n_features: An integer indicating the maximum number of features to
             retain.
         :param scale_factor: A float indicating the pyramid decimation ratio, greater
@@ -40,7 +39,7 @@ class ORBFeature(AbstractLocalFeature):
             oriented BRIEF descriptor.
         :param fast_threshold: An integer indicating the fast threshold
         """
-        super().__init__(resize_size, bovw_n_clusters_range)
+        super().__init__(resize_size, bovw_n_clusters_space)
         self.orb: cv.ORB = cv.ORB_create(
             nfeatures=n_features,
             scaleFactor=scale_factor,

@@ -45,7 +45,7 @@ def _get_stacked_descriptors(descriptor_list: list[np.ndarray]) -> np.ndarray:
 def _find_optimal_cluster_count(
     descriptors: np.ndarray, n_clusters_space: list[int]
 ) -> KMeans:
-    """Finds optimal n_cluster value from the given range based on the silhouette score
+    """Finds optimal n_cluster value from the given space based on the silhouette score
     of the resulting clusters.
 
     :param descriptors: A 2-d numpy array of shape
