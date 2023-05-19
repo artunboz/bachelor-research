@@ -14,7 +14,6 @@ class SIFTFeature(AbstractLocalFeature):
         contrast_threshold: float = 0.09,
         edge_threshold: float = 10.0,
         sigma: float = 1.6,
-        enable_precise_upscale: bool = False,
     ) -> None:
         """Inits a SIFTFeature instance. The underlying implementation relies on
         OpenCV's implementation of the SIFT feature. The parameter descriptions are
@@ -36,9 +35,6 @@ class SIFTFeature(AbstractLocalFeature):
             filtered out (more features are retained).
         :param sigma: A float indicating the sigma of the Gaussian applied to the input
             image at the octave #0.
-        :param enable_precise_upscale: A boolean indicating whether to enable precise
-            upscaling in the scale pyramid, which maps index x to 2x. This prevents
-            localization bias. The option is disabled by default.
         """
         super().__init__(resize_size, bovw_n_clusters_space)
         self.sift: cv.SIFT = cv.SIFT_create(
@@ -47,7 +43,6 @@ class SIFTFeature(AbstractLocalFeature):
             contrastThreshold=contrast_threshold,
             edgeThreshold=edge_threshold,
             sigma=sigma,
-            enable_precise_upscale=enable_precise_upscale,
         )
 
     def read_image(self, image_path: str) -> np.ndarray:

@@ -43,10 +43,21 @@ class HOGFeature(AbstractGlobalFeature):
         self.channel_axis: int = channel_axis
 
     def read_image(self, image_path: str) -> np.ndarray:
+        """Reads the image found in the given path, resizes it based on the
+        self.resize_size attribute and returns the image as a numpy array.
+
+        :param image_path: A string indicating the path to the image.
+        :return: A numpy array containing the image.
+        """
         image: np.ndarray = io.imread(image_path)
         return transform.resize(image, self.resize_size[::-1])
 
     def compute_image_features(self, image: np.ndarray) -> np.ndarray:
+        """Computes HOG features for the given image.
+
+        :param image: A numpy array containing the image.
+        :return: A numpy array containing the computed features.
+        """
         return feature.hog(
             image=image,
             orientations=self.orientations,

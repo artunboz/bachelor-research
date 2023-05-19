@@ -31,5 +31,5 @@ class AbstractGlobalFeature(AbstractFeature):
         """Computes the features for the given image.
 
         :param image: A numpy array containing the image.
-        :return: A numppy array containing the
+        :return: A numpy array containing the computed features.
         """
