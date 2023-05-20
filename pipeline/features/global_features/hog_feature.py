@@ -1,7 +1,5 @@
 import numpy as np
-from skimage import feature
-from skimage import io
-from skimage import transform
+from skimage import feature, io, transform, util
 
 from pipeline.features.global_features.abstract_global_feature import (
     AbstractGlobalFeature,
@@ -50,7 +48,8 @@ class HOGFeature(AbstractGlobalFeature):
         :return: A numpy array containing the image.
         """
         image: np.ndarray = io.imread(image_path)
-        return transform.resize(image, self.resize_size[::-1])
+        image = transform.resize(image, self.resize_size[::-1])
+        return util.img_as_ubyte(image)
 
     def compute_image_features(self, image: np.ndarray) -> np.ndarray:
         """Computes HOG features for the given image.

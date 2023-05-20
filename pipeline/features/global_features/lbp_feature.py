@@ -37,7 +37,7 @@ class LBPFeature(AbstractGlobalFeature):
         """
         image: np.ndarray = io.imread(image_path, as_gray=True)
         image = transform.resize(image, self.resize_size[::-1])
-        return util.img_as_uint(image)
+        return util.img_as_ubyte(image)
 
     def compute_image_features(self, image: np.ndarray) -> np.ndarray:
         """Computes LBP features for the given image.
