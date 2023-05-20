@@ -9,7 +9,7 @@ class ORBFeature(AbstractLocalFeature):
         self,
         resize_size: tuple[int, int],
         bovw_n_clusters_space: list[int],
-        n_features: int = 500,
+        n_features: int = 20,
         scale_factor: float = 1.2,
         n_levels: int = 8,
         first_level: int = 0,
