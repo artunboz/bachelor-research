@@ -1,3 +1,5 @@
+from typing import cast
+
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
@@ -21,7 +23,7 @@ class AutoencoderReducer(AbstractReducer):
 
         self.autoencoder.compile(optimizer=self.optimizer, loss=self.loss)
 
-        self.standard_scaler: MinMaxScaler = MinMaxScaler()
+        self.min_max_scaler: MinMaxScaler = MinMaxScaler()
 
     def reduce_dimensions(
         self, samples: np.ndarray, epochs: int = 10, batch_size: int = 32
@@ -36,8 +38,11 @@ class AutoencoderReducer(AbstractReducer):
             the samples in a latent space with a lower dimensionality.
         """
         train, test = train_test_split(samples, test_size=0.1)
-        scaled_train: np.ndarray = self.standard_scaler.fit_transform(train)
-        scaled_test: np.ndarray = self.standard_scaler.transform(test)
+        self.min_max_scaler = self.min_max_scaler.fit(train)
+        self.min_max_scaler = cast(MinMaxScaler, self.min_max_scaler)
+
+        scaled_train: np.ndarray = self.min_max_scaler.transform(train)
+        scaled_test: np.ndarray = self.min_max_scaler.transform(test)
 
         self.autoencoder.fit(
             scaled_train,
@@ -47,6 +52,4 @@ class AutoencoderReducer(AbstractReducer):
             validation_data=(scaled_test, scaled_test),
         )
 
-        return self.autoencoder.encoder.predict(
-            self.standard_scaler.transform(samples), batch_size=batch_size
-        )
+        return self.autoencoder.encoder(self.min_max_scaler.transform(samples)).numpy()

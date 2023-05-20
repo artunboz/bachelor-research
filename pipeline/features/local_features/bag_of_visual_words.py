@@ -35,9 +35,15 @@ def _get_stacked_descriptors(descriptor_list: list[np.ndarray]) -> np.ndarray:
         (n_keypoints, fixed_feature_length).
     :return: A 2-d numpy array of shape (n_descriptors, fixed_descriptor_length).
     """
-    stacked_descriptors: np.ndarray = np.array(descriptor_list[0])
-    for d in descriptor_list[1:]:
-        stacked_descriptors = np.vstack((stacked_descriptors, d))
+    n_descriptors: int = sum([d.shape[0] for d in descriptor_list])
+    descriptor_dim: int = descriptor_list[0].shape[1]
+
+    stacked_descriptors: np.ndarray = np.empty(shape=(n_descriptors, descriptor_dim))
+    i: int = 0
+    for descriptors in descriptor_list:
+        for d in descriptors:
+            stacked_descriptors[i] = d
+            i += 1
 
     return stacked_descriptors
 
@@ -64,6 +70,7 @@ def _find_optimal_cluster_count(
         kmeans_list.append(kmeans)
         scores.append(score)
 
+    print(scores)
     optimal_idx: int = int(np.argmax(scores))
     return kmeans_list[optimal_idx]
 
@@ -76,7 +83,7 @@ def _cluster_descriptors(descriptors: np.ndarray, n_clusters: int) -> KMeans:
     :param n_clusters: An integer indicating the number of clusters.
     :return: A fitted instance of sklearn.cluster.KMeans.
     """
-    return cast(KMeans, KMeans(n_clusters=n_clusters).fit(descriptors))
+    return cast(KMeans, KMeans(n_clusters=n_clusters, n_init="auto").fit(descriptors))
 
 
 def _extract_features(
