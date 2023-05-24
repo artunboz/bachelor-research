@@ -9,7 +9,7 @@ from src.features.global_features.abstract_global_feature import (
 class LBPFeature(AbstractGlobalFeature):
     def __init__(
         self,
-        resize_size: tuple[int, int],
+        resize_size: tuple[int, int] = (48, 48),
         p: int = 8,
         r: int = 1,
         method: str = "uniform",

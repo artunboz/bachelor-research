@@ -31,3 +31,12 @@ class AbstractFeature(ABC):
         :param image_path: A string indicating the path to the image.
         :return: A numpy array containing the image.
         """
+
+    def get_config(self) -> dict:
+        """Returns the configuration of the feature as a dictionary.
+
+        :return: A dictionary containing the configuration of the feature.
+        """
+        config: dict = vars(self)
+        config["resize_size"] = "x".join(map(str, config["resize_size"]))
+        return config

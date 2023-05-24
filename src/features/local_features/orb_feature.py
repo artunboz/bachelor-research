@@ -40,15 +40,22 @@ class ORBFeature(AbstractLocalFeature):
         :param fast_threshold: An integer indicating the fast threshold
         """
         super().__init__(resize_size, bovw_n_clusters_space)
+        self.n_features: int = n_features
+        self.scale_factor: float = scale_factor
+        self.n_levels: int = n_levels
+        self.first_level: int = first_level
+        self.wta_k: int = wta_k
+        self.patch_size: int = patch_size
+        self.fast_threshold: int = fast_threshold
         self.orb: cv.ORB = cv.ORB_create(
-            nfeatures=n_features,
-            scaleFactor=scale_factor,
-            nlevels=n_levels,
-            edgeThreshold=patch_size,
-            firstLevel=first_level,
-            WTA_K=wta_k,
-            patchSize=patch_size,
-            fastthreshold=fast_threshold,
+            nfeatures=self.n_features,
+            scaleFactor=self.scale_factor,
+            nlevels=self.n_levels,
+            edgeThreshold=self.patch_size,
+            firstLevel=self.first_level,
+            WTA_K=self.wta_k,
+            patchSize=self.patch_size,
+            fastthreshold=self.fast_threshold,
         )
 
     def read_image(self, image_path: str) -> np.ndarray:
