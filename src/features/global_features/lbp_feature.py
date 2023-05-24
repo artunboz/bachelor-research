@@ -46,3 +46,12 @@ class LBPFeature(AbstractGlobalFeature):
         :return: A numpy array containing the computed features.
         """
         return feature.local_binary_pattern(image, self.p, self.r, self.method).ravel()
+
+    def get_config(self) -> str:
+        config: str = (
+            f"LBP: resize_size={self.resize_size},"
+            f" p={self.p},"
+            f" r={self.r},"
+            f" method={self.method}."
+        )
+        return config

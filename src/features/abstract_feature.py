@@ -31,3 +31,10 @@ class AbstractFeature(ABC):
         :param image_path: A string indicating the path to the image.
         :return: A numpy array containing the image.
         """
+
+    @abstractmethod
+    def get_config(self) -> str:
+        """Returns the configuration of the feature as a string.
+
+        :return: A string indicating the configuration of the feature.
+        """
