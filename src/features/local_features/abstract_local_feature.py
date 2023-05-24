@@ -5,8 +5,8 @@ from typing import Optional
 import numpy as np
 from tqdm import tqdm
 
-from pipeline.features.abstract_feature import AbstractFeature
-from pipeline.features.local_features.bag_of_visual_words import compute_bovw_features
+from src.features.abstract_feature import AbstractFeature
+from src.features.local_features.bag_of_visual_words import compute_bovw_features
 
 
 class AbstractLocalFeature(AbstractFeature):

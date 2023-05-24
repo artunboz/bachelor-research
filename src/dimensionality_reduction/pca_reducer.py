@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.decomposition import PCA
 
-from pipeline.dimensionality_reduction.abstract_reducer import AbstractReducer
+from src.dimensionality_reduction.abstract_reducer import AbstractReducer
 
 
 class PCAReducer(AbstractReducer):

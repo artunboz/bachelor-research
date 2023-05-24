@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 
-from pipeline.features.local_features.abstract_local_feature import AbstractLocalFeature
+from src.features.local_features.abstract_local_feature import AbstractLocalFeature
 
 
 class ORBFeature(AbstractLocalFeature):

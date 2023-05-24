@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.python.keras import Model
 
-from pipeline.dimensionality_reduction.abstract_reducer import AbstractReducer
+from src.dimensionality_reduction.abstract_reducer import AbstractReducer
 
 
 class AutoencoderReducer(AbstractReducer):

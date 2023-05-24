@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from evaluation import metrics
+from src.evaluation import metrics
 
 
 @pytest.fixture

@@ -3,7 +3,7 @@
 import cv2 as cv
 import numpy as np
 
-from pipeline.features.global_features.abstract_global_feature import (
+from src.features.global_features.abstract_global_feature import (
     AbstractGlobalFeature,
 )
 

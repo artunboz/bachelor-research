@@ -4,7 +4,7 @@ from abc import abstractmethod
 import numpy as np
 from tqdm import tqdm
 
-from pipeline.features.abstract_feature import AbstractFeature
+from src.features.abstract_feature import AbstractFeature
 
 
 class AbstractGlobalFeature(AbstractFeature):
