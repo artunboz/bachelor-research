@@ -13,3 +13,11 @@ class AbstractClustering(ABC):
         :return: A 1-d numpy array of shape containing the cluster label for each sample
             in the same order as the input array.
         """
+
+    def get_config(self) -> dict:
+        """Returns the configuration of the clustering as a dictionary.
+
+        :return: A dictionary containing the configuration of the clustering.
+        """
+        config: dict = vars(self)
+        return config
