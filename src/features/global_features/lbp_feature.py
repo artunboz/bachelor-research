@@ -9,7 +9,7 @@ from src.features.global_features.abstract_global_feature import (
 class LBPFeature(AbstractGlobalFeature):
     def __init__(
         self,
-        resize_size: tuple[int, int],
+        resize_size: tuple[int, int] = (48, 48),
         p: int = 8,
         r: int = 1,
         method: str = "uniform",
@@ -46,12 +46,3 @@ class LBPFeature(AbstractGlobalFeature):
         :return: A numpy array containing the computed features.
         """
         return feature.local_binary_pattern(image, self.p, self.r, self.method).ravel()
-
-    def get_config(self) -> str:
-        config: str = (
-            f"LBP: resize_size={self.resize_size},"
-            f" p={self.p},"
-            f" r={self.r},"
-            f" method={self.method}."
-        )
-        return config

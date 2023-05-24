@@ -65,14 +65,3 @@ class HOGFeature(AbstractGlobalFeature):
             block_norm=self.block_norm,
             channel_axis=self.channel_axis,
         )
-
-    def get_config(self) -> str:
-        config: str = (
-            f"HOG: resize_size={self.resize_size},"
-            f" orientations={self.orientations},"
-            f" pixels_per_cell={self.pixels_per_cell},"
-            f" cells_per_block={self.cells_per_block},"
-            f" block_norm={self.block_norm},"
-            f" channel_axis={self.channel_axis}."
-        )
-        return config

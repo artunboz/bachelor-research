@@ -68,15 +68,3 @@ class SIFTFeature(AbstractLocalFeature):
         """
         _, des = self.sift.detectAndCompute(image, None)
         return des
-
-    def get_config(self) -> str:
-        config: str = (
-            f"SIFT: resize_size={self.resize_size},"
-            f" bovw_n_clusters_space={self.bovw_n_clusters_space},"
-            f" n_features={self.n_features},"
-            f" n_octave_layers={self.n_octave_layers},"
-            f" contrast_threshold={self.contrast_threshold},"
-            f" edge_threshold={self.edge_threshold},"
-            f" sigma={self.sigma}."
-        )
-        return config

@@ -32,9 +32,11 @@ class AbstractFeature(ABC):
         :return: A numpy array containing the image.
         """
 
-    @abstractmethod
-    def get_config(self) -> str:
-        """Returns the configuration of the feature as a string.
+    def get_config(self) -> dict:
+        """Returns the configuration of the feature as a dictionary.
 
-        :return: A string indicating the configuration of the feature.
+        :return: A dictionary containing the configuration of the feature.
         """
+        config: dict = vars(self)
+        config["resize_size"] = "x".join(map(str, config["resize_size"]))
+        return config

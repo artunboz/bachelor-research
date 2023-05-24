@@ -76,17 +76,3 @@ class ORBFeature(AbstractLocalFeature):
         """
         _, des = self.orb.detectAndCompute(image, None)
         return des
-
-    def get_config(self) -> str:
-        config: str = (
-            f"ORB: resize_size={self.resize_size},"
-            f" bovw_n_clusters_space={self.bovw_n_clusters_space},"
-            f" n_features={self.n_features},"
-            f" scale_factor={self.scale_factor},"
-            f" n_levels={self.n_levels},"
-            f" first_level={self.first_level},"
-            f" wta_k={self.wta_k},"
-            f" patch_size={self.patch_size},"
-            f" fast_threshold={self.fast_threshold}."
-        )
-        return config
