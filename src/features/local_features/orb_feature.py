@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 
-from pipeline.features.local_features.abstract_local_feature import AbstractLocalFeature
+from src.features.local_features.abstract_local_feature import AbstractLocalFeature
 
 
 class ORBFeature(AbstractLocalFeature):
@@ -9,7 +9,7 @@ class ORBFeature(AbstractLocalFeature):
         self,
         resize_size: tuple[int, int],
         bovw_n_clusters_space: list[int],
-        n_features: int = 500,
+        n_features: int = 20,
         scale_factor: float = 1.2,
         n_levels: int = 8,
         first_level: int = 0,

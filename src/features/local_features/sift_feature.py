@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 
-from pipeline.features.local_features.abstract_local_feature import AbstractLocalFeature
+from src.features.local_features.abstract_local_feature import AbstractLocalFeature
 
 
 class SIFTFeature(AbstractLocalFeature):
@@ -9,7 +9,7 @@ class SIFTFeature(AbstractLocalFeature):
         self,
         resize_size: tuple[int, int],
         bovw_n_clusters_space: list[int],
-        n_features: int = 20,
+        n_features: int = 10,
         n_octave_layers: int = 3,
         contrast_threshold: float = 0.09,
         edge_threshold: float = 10.0,

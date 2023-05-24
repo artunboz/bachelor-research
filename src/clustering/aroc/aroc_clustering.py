@@ -1,7 +1,7 @@
 import numpy as np
 
-from pipeline.clustering.abstract_clustering import AbstractClustering
-from pipeline.clustering.aroc.aroc import aroc
+from src.clustering.abstract_clustering import AbstractClustering
+from src.clustering.aroc.aroc import aroc
 
 
 class AROClustering(AbstractClustering):

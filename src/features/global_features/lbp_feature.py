@@ -1,7 +1,7 @@
 import numpy as np
 from skimage import feature, io, transform, util
 
-from pipeline.features.global_features.abstract_global_feature import (
+from src.features.global_features.abstract_global_feature import (
     AbstractGlobalFeature,
 )
 

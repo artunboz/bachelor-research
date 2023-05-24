@@ -1,7 +1,7 @@
 import numpy as np
 from skimage import feature, io, transform, util
 
-from pipeline.features.global_features.abstract_global_feature import (
+from src.features.global_features.abstract_global_feature import (
     AbstractGlobalFeature,
 )
 
@@ -9,7 +9,7 @@ from pipeline.features.global_features.abstract_global_feature import (
 class HOGFeature(AbstractGlobalFeature):
     def __init__(
         self,
-        resize_size: tuple[int, int],
+        resize_size: tuple[int, int] = (64, 128),
         orientations: int = 9,
         pixels_per_cell: tuple[int, int] = (8, 8),
         cells_per_block: tuple[int, int] = (2, 2),
@@ -20,7 +20,7 @@ class HOGFeature(AbstractGlobalFeature):
         original paper (https://ieeexplore.ieee.org/document/1467360).
 
         :param resize_size: A 2-tuple of integers indicating the pixel width and height
-            of the resized image.
+            of the resized image. Defaults to (64, 128).
         :param orientations: An integer indicating the number of orientation bins.
             Defaults to 9.
         :param pixels_per_cell: A 2-tuple of integers indicating the size (in pixels) of
