@@ -3,6 +3,7 @@ from abc import abstractmethod
 from typing import Optional
 
 import numpy as np
+from fishervector import FisherVectorGMM
 from tqdm import tqdm
 
 from src.features.abstract_feature import AbstractFeature
@@ -11,19 +12,35 @@ from src.features.local_features.bag_of_visual_words import compute_bovw_feature
 
 class AbstractLocalFeature(AbstractFeature):
     def __init__(
-        self, resize_size: tuple[int, int], bovw_n_clusters_space: list[int]
+        self,
+        resize_size: tuple[int, int],
+        quantization_method: str,
+        n_components_space: list[int],
     ) -> None:
         """Inits and AbstractLocalFeature instance.
 
         :param resize_size: A 2-tuple of integers indicating the pixel width and height
             of the resized image.
-        :param bovw_n_clusters_space: A list of integers representing the search space
-            for the optimal n_clusters value based on the silhouette score.
+        :param quantization_method: A sting indicating the quantization method for
+            converting the local descriptors of an image to a single feature vector.
+            Available options are "fisher" for fisher vectors and "bovw" for
+            bag-of-visual-words.
+        :param n_components_space: A list of integers containing either the number of
+            components to use or multiple numbers that form the options to choose the
+            best number from for vector quantization.
         """
         super().__init__(resize_size)
-        self.bovw_n_clusters_space: list[int] = bovw_n_clusters_space
-        self.image_names: Optional[list[str]] = None
-        self.image_features: Optional[np.ndarray] = None
+        self.quantization_method: str = quantization_method
+        self.n_components_space: list[int] = n_components_space
+
+    @abstractmethod
+    def get_descriptors(self, image: np.ndarray) -> Optional[np.ndarray]:
+        """Computes the descriptors for the given image.
+
+        :param image: A numpy array containing the image.
+        :return: A numpy array containing the descriptors. If the computation was not
+            successful for some reason, returns None.
+        """
 
     def extract_features(self, image_folder_path: str) -> np.ndarray:
         """Extracts features from all the images found in the folder located at the
@@ -46,19 +63,35 @@ class AbstractLocalFeature(AbstractFeature):
                 image_name_descriptor_list.append((image_name, descriptors))
 
         self.image_names, descriptor_list = list(zip(*image_name_descriptor_list))
-
-        print("Computing bag of features...")
-        self.image_features = compute_bovw_features(
-            descriptor_list, self.bovw_n_clusters_space
-        )
-        print("Bag of features computed.")
+        print("Quantizing vectors...")
+        self.image_features = self._vector_quantization(descriptor_list)
+        print("Features extracted!")
 
         return self.image_features
 
-    @abstractmethod
-    def get_descriptors(self, image: np.ndarray) -> np.ndarray:
-        """Computes the descriptors for the given image.
-
-        :param image: A numpy array containing the image.
-        :return: A numpy array containing the descriptors.
-        """
+    def _vector_quantization(self, descriptor_list: list[np.ndarray]) -> np.ndarray:
+        if self.quantization_method == "fisher":
+            stacked_descriptors: np.ndarray = np.stack(descriptor_list)
+            if len(self.n_components_space) > 1:
+                fv_gmm: FisherVectorGMM = FisherVectorGMM().fit_by_bic(
+                    stacked_descriptors, choices_n_kernels=self.n_components_space
+                )
+            else:
+                fv_gmm: FisherVectorGMM = FisherVectorGMM(
+                    n_kernels=self.n_components_space[0]
+                ).fit(stacked_descriptors)
+            fisher_vectors: np.ndarray = fv_gmm.predict(stacked_descriptors)
+            return np.reshape(
+                fisher_vectors,
+                (
+                    fisher_vectors.shape[0],
+                    fisher_vectors.shape[1] * fisher_vectors.shape[2],
+                ),
+            )
+        elif self.quantization_method == "bovw":
+            return compute_bovw_features(descriptor_list, self.n_components_space)
+        else:
+            raise ValueError(
+                f"The given quantization method of {self.quantization_method} is not"
+                f" supported."
+            )

@@ -17,6 +17,7 @@ def compute_bovw_features(
         (n_keypoints, fixed_feature_length).
     :param n_clusters_space: A list of integers representing the search space for the
         optimal n_clusters value based on the silhouette score.
+    :return: A 2-d numpy array of shape (n_images, n_dim_features).
     """
     all_descriptors: np.ndarray = _get_stacked_descriptors(descriptor_list)
     optimal_kmeans: KMeans = _find_optimal_cluster_count(
@@ -61,18 +62,22 @@ def _find_optimal_cluster_count(
     :return: An instance of sklearn.cluster.KMeans that is fitted on the given
         descriptors using the optimal n_clusters value.
     """
-    kmeans_list: list[KMeans] = []
-    scores: list[float] = []
-    for n in tqdm(n_clusters_space, desc="Finding optimal n_clusters"):
-        kmeans: KMeans = _cluster_descriptors(descriptors, n)
-        score: float = silhouette_score(descriptors, kmeans.labels_)
+    if len(n_clusters_space) == 1:
+        kmeans: KMeans = _cluster_descriptors(descriptors, n_clusters_space[0])
+        return kmeans
+    else:
+        kmeans_list: list[KMeans] = []
+        scores: list[float] = []
+        for n in tqdm(n_clusters_space, desc="Finding optimal n_clusters"):
+            kmeans: KMeans = _cluster_descriptors(descriptors, n)
+            score: float = silhouette_score(descriptors, kmeans.labels_)
 
-        kmeans_list.append(kmeans)
-        scores.append(score)
+            kmeans_list.append(kmeans)
+            scores.append(score)
 
-    print(scores)
-    optimal_idx: int = int(np.argmax(scores))
-    return kmeans_list[optimal_idx]
+        print(scores)
+        optimal_idx: int = int(np.argmax(scores))
+        return kmeans_list[optimal_idx]
 
 
 def _cluster_descriptors(descriptors: np.ndarray, n_clusters: int) -> KMeans:
