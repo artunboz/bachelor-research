@@ -17,14 +17,17 @@ class AbstractGlobalFeature(AbstractFeature):
             the images.
         :return: A 2-d numpy array of shape (n_images, n_features).
         """
+        self.image_names = sorted(os.listdir(image_folder_path))
         features_list: list[np.ndarray] = []
-        for image_file in tqdm(
-            sorted(os.listdir(image_folder_path)),
+        for image_name in tqdm(
+            self.image_names,
             desc="Extracting features from the images",
         ):
-            image: np.ndarray = self.read_image(f"{image_folder_path}/{image_file}")
+            image: np.ndarray = self.read_image(f"{image_folder_path}/{image_name}")
             features_list.append(self.compute_image_features(image))
-        return np.stack(features_list, axis=0)
+        self.image_features = np.stack(features_list, axis=0)
+
+        return self.image_features
 
     @abstractmethod
     def compute_image_features(self, image: np.ndarray) -> np.ndarray:

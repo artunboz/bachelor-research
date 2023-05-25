@@ -32,8 +32,6 @@ class AbstractLocalFeature(AbstractFeature):
         super().__init__(resize_size)
         self.quantization_method: str = quantization_method
         self.n_components_space: list[int] = n_components_space
-        self.image_names: Optional[list[str]] = None
-        self.image_features: Optional[np.ndarray] = None
 
     @abstractmethod
     def get_descriptors(self, image: np.ndarray) -> Optional[np.ndarray]:
