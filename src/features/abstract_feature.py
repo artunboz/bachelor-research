@@ -11,7 +11,7 @@ from src.util.helpers import create_json_dict
 
 class AbstractFeature(ABC):
     def __init__(self, resize_size: tuple[int, int]) -> None:
-        """Inits an AbstractFeature instance.
+        """Inits an AbstractFeature instance. Should not be used outside subclasses.
 
         :param resize_size: A 2-tuple of integers indicating the pixel width and height
             of the resized image.

@@ -10,6 +10,7 @@ from src.util.helpers import create_json_dict
 
 class AbstractReducer(ABC):
     def __init__(self) -> None:
+        """Inits an AbstractReducer instance. Should not be used outside subclasses."""
         self.reduced_features: Optional[np.ndarray] = None
 
     @abstractmethod
@@ -31,7 +32,7 @@ class AbstractReducer(ABC):
         return config
 
     def save_reduced_features(self, save_folder_path: str) -> None:
-        """Saves the reduced features.
+        """Saves the reduced features and the configuration of the reduction.
 
         :param save_folder_path: A sting indicating the folder to save the files to.
         """
@@ -43,4 +44,4 @@ class AbstractReducer(ABC):
 
         with open(f"{save_folder_path}/reducer_config.json", mode="w") as f:
             json.dump(self.get_config(), f)
-        np.save(f"{save_folder_path}/features.npy")
+        np.save(f"{save_folder_path}/features.npy", self.reduced_features)
