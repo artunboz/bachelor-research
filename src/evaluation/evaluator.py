@@ -14,15 +14,20 @@ from src.evaluation import metrics
 
 
 class Evaluator:
-    def __init__(self, features_dir: str, ground_truth_path: str) -> None:
+    def __init__(
+        self, features_dir: str, image_names_path: str, ground_truth_path: str
+    ) -> None:
         """Inits an Evaluator instance.
 
         :param features_dir: A string indicating the path of the directory containing
             the features.
+        :param image_names_path: A string indicating the path of the file containing the
+            image_names for which the features were computed.
         :param ground_truth_path: A string indicating the file containing the ground
             truth.
         """
         self.features_dir: str = features_dir
+        self.image_names_path: str = image_names_path
         self.ground_truth_path: str = ground_truth_path
         self.scores: dict[str, float] = {}
         self.features: Optional[np.ndarray] = None
@@ -63,15 +68,16 @@ class Evaluator:
         if len(self.scores) == 0:
             raise ValueError("Scores have not been computed.")
 
-        with open(f"{self.features_dir}/scores/json", mode="w") as f:
+        with open(f"{self.features_dir}/metrics.json", mode="w") as f:
             json.dump(self.scores, f)
 
     def _load_data(self) -> None:
         self.features = np.load(f"{self.features_dir}/features.npy")
         self.cluster_labels = np.load(f"{self.features_dir}/cluster_labels.npy")
 
-        with open(f"{self.features_dir}/image_names.pickle", mode="rb") as f:
+        with open(f"{self.image_names_path}", mode="rb") as f:
             image_names = pickle.load(f)
+
         actual_labels_df: pd.DataFrame = pd.read_csv(
             self.ground_truth_path, usecols=["image_name", "integer_label"]
         )
