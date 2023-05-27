@@ -6,10 +6,12 @@ from typing import Optional
 
 import numpy as np
 
+from src.util.helpers import create_json_dict
+
 
 class AbstractFeature(ABC):
     def __init__(self, resize_size: tuple[int, int]) -> None:
-        """Inits an AbstractFeature instance.
+        """Inits an AbstractFeature instance. Should not be used outside subclasses.
 
         :param resize_size: A 2-tuple of integers indicating the pixel width and height
             of the resized image.
@@ -43,12 +45,9 @@ class AbstractFeature(ABC):
 
         :return: A dictionary containing the configuration of the feature.
         """
-        members: dict = vars(self)
-        config: dict = {
-            k: v
-            for k, v in members.items()
-            if k not in ["image_names", "image_features"] and _safe_json(v)
-        }
+        config: dict = create_json_dict(vars(self))
+        del config["image_names"]
+        del config["image_features"]
         config["resize_size"] = "x".join(map(str, config["resize_size"]))
         return config
 
@@ -65,20 +64,8 @@ class AbstractFeature(ABC):
         if not os.path.isdir(save_folder_path):
             os.mkdir(save_folder_path)
 
-        with open(f"{save_folder_path}/config.json", mode="w") as f:
+        with open(f"{save_folder_path}/feature_config.json", mode="w") as f:
             json.dump(self.get_config(), f)
         with open(f"{save_folder_path}/image_names.pickle", mode="wb") as f:
             pickle.dump(self.image_names, f)
         np.save(f"{save_folder_path}/features.npy", self.image_features)
-
-
-def _safe_json(data) -> bool:
-    if data is None:
-        return True
-    elif isinstance(data, (bool, int, float)):
-        return True
-    elif isinstance(data, (tuple, list)):
-        return all(_safe_json(x) for x in data)
-    elif isinstance(data, dict):
-        return all(isinstance(k, str) and _safe_json(v) for k, v in data.items())
-    return False

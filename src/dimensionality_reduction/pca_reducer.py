@@ -1,3 +1,5 @@
+from typing import cast
+
 import numpy as np
 from sklearn.decomposition import PCA
 
@@ -10,19 +12,20 @@ class PCAReducer(AbstractReducer):
 
         :param n_components: An integer indicating the number of features to retain.
         """
+        super().__init__()
         self.pca: PCA = PCA(n_components=n_components)
 
-    def reduce_dimensions(self, samples: np.ndarray) -> np.ndarray:
+    def reduce_dimensions(self, features_dir: str) -> np.ndarray:
         """Reduces the dimensions of the given samples using Singular Value
         Decomposition (SVD).
 
-        :param samples: A 2-d numpy array of shape (n_samples, n_features) containing
-            the samples.
+        :param features_dir: A string indicating the file containing the features.
         :return: A 2-d numpy array of shape (n_samples, n_reduced_features) containing
             the samples in a latent space with a lower dimensionality.
         """
-        self.pca: PCA = self.pca.fit(samples)
-        return self.pca.transform(samples)
+        features: np.ndarray = np.load(f"{features_dir}/features.npy")
+        self.pca: PCA = cast(PCA, self.pca.fit(features))
+        return self.pca.transform(features)
 
     def get_explained_variance(self) -> float:
         """Returns the variance explained by the retained components.
