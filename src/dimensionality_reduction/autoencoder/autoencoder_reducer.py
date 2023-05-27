@@ -17,6 +17,7 @@ class AutoencoderReducer(AbstractReducer):
         :param optimizer: A string indicating the optimizer to use.
         :param loss: A string indicating the loss function to use.
         """
+        super().__init__()
         self.autoencoder: Model = autoencoder
         self.optimizer: str = optimizer
         self.loss: str = loss
@@ -26,18 +27,18 @@ class AutoencoderReducer(AbstractReducer):
         self.min_max_scaler: MinMaxScaler = MinMaxScaler()
 
     def reduce_dimensions(
-        self, samples: np.ndarray, epochs: int = 10, batch_size: int = 32
+        self, features_dir: str, epochs: int = 10, batch_size: int = 32
     ) -> np.ndarray:
         """Reduces the dimensions of the given samples.
 
-        :param samples: A 2-d numpy array of shape (n_samples, n_features) containing
-            the samples.
+        :param features_dir: A string indicating the file containing the features.
         :param epochs: An integer indicating the number of epochs.
         :param batch_size: A float indicating the batch size to use.
         :return: A 2-d numpy array of shape (n_samples, n_reduced_features) containing
             the samples in a latent space with a lower dimensionality.
         """
-        train, test = train_test_split(samples, test_size=0.1)
+        features: np.ndarray = np.load(f"{features_dir}/features.npy")
+        train, test = train_test_split(features, test_size=0.1)
         self.min_max_scaler = self.min_max_scaler.fit(train)
         self.min_max_scaler = cast(MinMaxScaler, self.min_max_scaler)
 
@@ -52,4 +53,4 @@ class AutoencoderReducer(AbstractReducer):
             validation_data=(scaled_test, scaled_test),
         )
 
-        return self.autoencoder.encoder(self.min_max_scaler.transform(samples)).numpy()
+        return self.autoencoder.encoder(self.min_max_scaler.transform(features)).numpy()
