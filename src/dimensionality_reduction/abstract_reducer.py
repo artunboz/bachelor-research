@@ -28,7 +28,6 @@ class AbstractReducer(ABC):
         :return: A dictionary containing the configuration of the reducer.
         """
         config: dict = create_json_dict(vars(self))
-        del config["reduced_features"]
         return config
 
     def save_reduced_features(self, save_folder_path: str) -> None:
