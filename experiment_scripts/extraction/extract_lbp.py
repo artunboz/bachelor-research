@@ -1,6 +1,4 @@
-from itertools import product
-
-from tqdm import tqdm
+from tqdm.contrib.itertools import product
 
 from paths import DATA_DIR
 from src.features.global_features.lbp_feature import LBPFeature
@@ -12,9 +10,8 @@ p_space = [8, 16, 24]
 r_space = [1, 2, 3]
 method_space = ["default", "ror", "uniform"]
 
-for i, (resize_size, p, r, method) in tqdm(
-    enumerate(product(resize_size_space, p_space, r_space, method_space)),
-    desc="Parameter Combinations",
+for i, (resize_size, p, r, method) in enumerate(
+    product(resize_size_space, p_space, r_space, method_space)
 ):
     lbp = LBPFeature(resize_size=resize_size, p=p, r=r, method=method)
     lbp.extract_features(image_folder_path=image_folder_path)

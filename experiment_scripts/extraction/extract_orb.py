@@ -1,6 +1,4 @@
-from itertools import product
-
-from tqdm import tqdm
+from tqdm.contrib.itertools import product
 
 from paths import DATA_DIR
 from src.features.local_features.orb_feature import ORBFeature
@@ -29,22 +27,19 @@ for i, (
     wta_k,
     patch_size,
     fast_threshold,
-) in tqdm(
-    enumerate(
-        product(
-            resize_size_space,
-            quantization_method_space,
-            n_components_space_space,
-            n_features_space,
-            scale_factor_space,
-            n_levels_space,
-            first_level_space,
-            wta_k_space,
-            patch_size_space,
-            fast_threshold_space,
-        )
-    ),
-    desc="Parameter Combinations",
+) in enumerate(
+    product(
+        resize_size_space,
+        quantization_method_space,
+        n_components_space_space,
+        n_features_space,
+        scale_factor_space,
+        n_levels_space,
+        first_level_space,
+        wta_k_space,
+        patch_size_space,
+        fast_threshold_space,
+    )
 ):
     orb = ORBFeature(
         resize_size=resize_size,

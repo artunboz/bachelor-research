@@ -1,6 +1,4 @@
-from itertools import product
-
-from tqdm import tqdm
+from tqdm.contrib.itertools import product
 
 from paths import DATA_DIR
 from src.features.global_features.hog_feature import HOGFeature
@@ -19,17 +17,14 @@ for i, (
     pixels_per_cell,
     cells_per_block,
     block_norm,
-) in tqdm(
-    enumerate(
-        product(
-            resize_size_space,
-            orientations_space,
-            pixels_per_cell_space,
-            cells_per_block_space,
-            block_norm_space,
-        )
-    ),
-    desc="Parameter Combinations",
+) in enumerate(
+    product(
+        resize_size_space,
+        orientations_space,
+        pixels_per_cell_space,
+        cells_per_block_space,
+        block_norm_space,
+    )
 ):
     hog = HOGFeature(
         resize_size=resize_size,
