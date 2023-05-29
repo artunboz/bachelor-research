@@ -3,7 +3,7 @@ from itertools import product
 from paths import DATA_DIR
 from src.features.global_features.hog_feature import HOGFeature
 
-image_folder_path = f"{DATA_DIR}/deneme"
+image_folder_path = f"{DATA_DIR}/extracted_images/face_images"
 
 resize_size_space = [(64, 64), (64, 128), (128, 128)]
 orientations_space = [9, 18]

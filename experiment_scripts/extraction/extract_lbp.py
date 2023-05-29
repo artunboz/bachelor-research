@@ -3,7 +3,7 @@ from itertools import product
 from paths import DATA_DIR
 from src.features.global_features.lbp_feature import LBPFeature
 
-image_folder_path = f"{DATA_DIR}/deneme"
+image_folder_path = f"{DATA_DIR}/extracted_images/face_images"
 
 resize_size_space = [(48, 48), (96, 96)]
 p_space = [8, 16, 24]

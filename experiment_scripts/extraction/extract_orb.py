@@ -3,7 +3,7 @@ from itertools import product
 from paths import DATA_DIR
 from src.features.local_features.orb_feature import ORBFeature
 
-image_folder_path = f"{DATA_DIR}/deneme"
+image_folder_path = f"{DATA_DIR}/extracted_images/face_images"
 
 resize_size_space = [(300, 300), (400, 400)]
 quantization_method_space = ["fisher"]
