@@ -1,5 +1,3 @@
-"""WIP"""
-
 import cv2 as cv
 import numpy as np
 
@@ -17,11 +15,14 @@ class RGBHistogramFeature(AbstractGlobalFeature):
 
     def read_image(self, image_path: str) -> np.ndarray:
         image: np.ndarray = cv.imread(image_path)
-        resized_image = cv.resize(image, self.resize_size)
-        print(np.min(resized_image))
-        return image
+        return cv.resize(image, self.resize_size)
 
     def compute_image_features(self, image: np.ndarray) -> np.ndarray:
+        """Computes the RGB histogram feature with (256 * 3,) dimensions.
+
+        :param image: A numpy array containing the image.
+        :return: A 1-d numpy feature vector.
+        """
         bgr_planes: tuple[np.ndarray, np.ndarray, np.ndarray] = cv.split(image)
         hist_size: int = 256
         hist_range: tuple[int, int] = (0, 256)  # the upper boundary is exclusive
