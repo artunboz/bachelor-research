@@ -1,15 +1,18 @@
 import os
 
+from tqdm import tqdm
+
 from paths import DATA_DIR
 from src.clustering.kmeans_clustering import KMeansClustering
 
-n_clusters_space = [10, 20]
+n_clusters_space = [10, 11, 12, 13, 14]
 
 root_folder = f"{DATA_DIR}/lbp"
 eval_folders = sorted(os.listdir(root_folder))
 
 for i, n_clusters in enumerate(n_clusters_space):
-    for folder in eval_folders:
+    print(f"Calculating n_clusters={n_clusters}")
+    for folder in tqdm(eval_folders, desc="Configurations"):
         folder_path = f"{root_folder}/{folder}"
         clustering_folder_path = f"{folder_path}/clustering"
         kmeans_folder_path = f"{clustering_folder_path}/kmeans"

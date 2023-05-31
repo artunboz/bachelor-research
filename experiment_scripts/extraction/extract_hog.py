@@ -26,12 +26,14 @@ for i, (
         block_norm_space,
     )
 ):
-    hog = HOGFeature(
-        resize_size=resize_size,
-        orientations=orientations,
-        pixels_per_cell=pixels_per_cell,
-        cells_per_block=cells_per_block,
-        block_norm=block_norm,
-    )
-    hog.extract_features(image_folder_path=image_folder_path)
-    hog.save_features(f"{DATA_DIR}/hog/run_{i}")
+    # hog = HOGFeature(
+    #     resize_size=resize_size,
+    #     orientations=orientations,
+    #     pixels_per_cell=pixels_per_cell,
+    #     cells_per_block=cells_per_block,
+    #     block_norm=block_norm,
+    # )
+    # hog.extract_features(image_folder_path=image_folder_path)
+    # hog.save_features(f"{DATA_DIR}/hog/run_{i}")
+    if resize_size == (128, 128):
+        print(i, resize_size)
