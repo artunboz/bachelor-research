@@ -2,6 +2,7 @@ import json
 import os
 
 import pandas as pd
+from tqdm import tqdm
 
 from paths import DATA_DIR
 from src.evaluation.evaluator import Evaluator
@@ -11,7 +12,7 @@ run = "run_0"
 
 root_folder = f"{DATA_DIR}/lbp"
 eval_folders = sorted(os.listdir(root_folder))
-for folder in eval_folders:
+for folder in tqdm(eval_folders, desc="Evaluated Folders"):
     folder_path = f"{root_folder}/{folder}"
     evaluator = Evaluator(
         features_path=f"{folder_path}/features.npy",
