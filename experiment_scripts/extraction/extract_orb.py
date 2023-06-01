@@ -54,4 +54,4 @@ for i, (
         fast_threshold=fast_threshold,
     )
     orb.extract_features(image_folder_path=image_folder_path)
-    orb.save_features(f"{DATA_DIR}/orb_image_size_exps/run_{i}")
+    orb.save_features(f"{DATA_DIR}/orb/run_{i}")
