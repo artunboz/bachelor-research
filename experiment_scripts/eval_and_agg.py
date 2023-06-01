@@ -11,6 +11,8 @@ clustering_type = "kmeans"
 runs = ["run_1", "run_2", "run_3", "run_4"]
 root_folder = f"{DATA_DIR}/lbp"
 eval_folders = sorted(os.listdir(root_folder))
+if "results" in eval_folders:
+    eval_folders.remove("results")
 
 for run in runs:
     for folder in tqdm(eval_folders, desc="Evaluated Folders"):
