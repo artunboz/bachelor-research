@@ -54,10 +54,10 @@ class Evaluator:
         self._load_data()
 
         self.scores["image_count"] = self.image_count
-        self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
-        self.scores["calinski_harabasz"] = calinski_harabasz_score(
-            self.features, self.cluster_labels
-        )
+        # self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
+        # self.scores["calinski_harabasz"] = calinski_harabasz_score(
+        #     self.features, self.cluster_labels
+        # )
         self.scores["davies_bouldin"] = davies_bouldin_score(
             self.features, self.cluster_labels
         )

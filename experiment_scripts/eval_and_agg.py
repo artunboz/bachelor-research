@@ -30,8 +30,8 @@ for run in runs:
         columns=[
             "name",
             "image_count",
-            "silhouette",
-            "calinski_harabasz",
+            # "silhouette",
+            # "calinski_harabasz",
             "davies_bouldin",
             "precision",
             "recall",
