@@ -5,7 +5,7 @@ from tqdm import tqdm
 from paths import DATA_DIR
 from src.clustering.kmeans_clustering import KMeansClustering
 
-n_clusters_space = [12, 13, 14]
+n_clusters_space = [10, 11, 12, 13, 14]
 
 root_folder = f"{DATA_DIR}/hog"
 eval_folders = sorted(os.listdir(root_folder))
