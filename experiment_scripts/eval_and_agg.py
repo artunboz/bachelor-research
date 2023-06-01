@@ -8,8 +8,8 @@ from paths import DATA_DIR
 from src.evaluation.evaluator import Evaluator
 
 clustering_type = "kmeans"
-runs = ["run_1", "run_2", "run_3", "run_4"]
-root_folder = f"{DATA_DIR}/lbp"
+runs = ["run_0", "run_1", "run_2", "run_3", "run_4"]
+root_folder = f"{DATA_DIR}/hog"
 eval_folders = sorted(os.listdir(root_folder))
 if "results" in eval_folders:
     eval_folders.remove("results")
