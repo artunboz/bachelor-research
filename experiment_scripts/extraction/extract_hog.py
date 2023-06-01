@@ -5,10 +5,10 @@ from src.features.global_features.hog_feature import HOGFeature
 
 image_folder_path = f"{DATA_DIR}/extracted_images/face_images"
 
-resize_size_space = [(64, 64), (64, 128), (128, 128)]
-orientations_space = [9, 18]
+resize_size_space = [(64, 64), (64, 128)]
+orientations_space = [4, 9]
 pixels_per_cell_space = [(8, 8), (16, 16)]
-cells_per_block_space = [(1, 1), (2, 2), (3, 3)]
+cells_per_block_space = [(2, 2), (3, 3)]
 block_norm_space = ["L1", "L1-sqrt", "L2", "L2-Hys"]
 
 for i, (
@@ -26,11 +26,6 @@ for i, (
         block_norm_space,
     )
 ):
-    if resize_size == (128, 128):
-        continue
-    if i < 82:
-        continue
-
     hog = HOGFeature(
         resize_size=resize_size,
         orientations=orientations,
