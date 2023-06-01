@@ -33,8 +33,8 @@ for run in runs:
             # "silhouette",
             # "calinski_harabasz",
             "davies_bouldin",
-            "precision",
-            "recall",
+            # "precision",
+            # "recall",
             "f1",
         ]
     )
