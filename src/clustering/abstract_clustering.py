@@ -28,7 +28,6 @@ class AbstractClustering(ABC):
         :return: A dictionary containing the configuration of the clustering.
         """
         config: dict = create_json_dict(vars(self))
-        del config["cluster_labels"]
         return config
 
     def save_cluster_labels(self, save_folder_path: str) -> None:

@@ -52,5 +52,8 @@ class AutoencoderReducer(AbstractReducer):
             batch_size=batch_size,
             validation_data=(scaled_test, scaled_test),
         )
+        self.reduced_features = self.autoencoder.encoder(
+            self.min_max_scaler.transform(features)
+        ).numpy()
 
-        return self.autoencoder.encoder(self.min_max_scaler.transform(features)).numpy()
+        return self.reduced_features

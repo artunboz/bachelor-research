@@ -5,7 +5,7 @@ def create_json_dict(d: dict) -> dict:
 def safe_json(data) -> bool:
     if data is None:
         return True
-    elif isinstance(data, (bool, int, float)):
+    elif isinstance(data, (bool, int, float, str)):
         return True
     elif isinstance(data, (tuple, list)):
         return all(safe_json(x) for x in data)

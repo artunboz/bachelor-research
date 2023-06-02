@@ -19,6 +19,7 @@ class AbstractFeature(ABC):
         self.resize_size: tuple[int, int] = resize_size
         self.image_names: Optional[list[str]] = None
         self.image_features: Optional[np.ndarray] = None
+        self.feature_dim: Optional[int] = None
 
     @abstractmethod
     def extract_features(self, image_folder_path: str) -> np.ndarray:
@@ -45,9 +46,11 @@ class AbstractFeature(ABC):
 
         :return: A dictionary containing the configuration of the feature.
         """
+        if self.image_features is not None:
+            self.feature_dim = self.image_features.shape[1]
+
         config: dict = create_json_dict(vars(self))
         del config["image_names"]
-        del config["image_features"]
         config["resize_size"] = "x".join(map(str, config["resize_size"]))
         return config
 

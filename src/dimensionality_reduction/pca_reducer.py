@@ -25,7 +25,9 @@ class PCAReducer(AbstractReducer):
         """
         features: np.ndarray = np.load(f"{features_dir}/features.npy")
         self.pca: PCA = cast(PCA, self.pca.fit(features))
-        return self.pca.transform(features)
+        self.reduced_features = self.pca.transform(features)
+
+        return self.reduced_features
 
     def get_explained_variance(self) -> float:
         """Returns the variance explained by the retained components.
