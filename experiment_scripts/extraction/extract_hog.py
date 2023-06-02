@@ -44,4 +44,4 @@ for i, (
     # )
     # hog.extract_features(image_folder_path=image_folder_path)
     # hog.save_features(f"{DATA_DIR}/hog/run_{i}")
-print(config_df)
+config_df.to_csv(f"{DATA_DIR}/hog_configs.csv", index=False)
