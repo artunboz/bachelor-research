@@ -52,8 +52,24 @@ class AutoencoderReducer(AbstractReducer):
             batch_size=batch_size,
             validation_data=(scaled_test, scaled_test),
         )
-        self.reduced_features = self.autoencoder.encoder.predict(
-            self.min_max_scaler.transform(features)
-        ).numpy()
+
+        all_features_scaled: np.ndarray = self.min_max_scaler.transform(features)
+        self.reduced_features = np.empty(
+            shape=(
+                all_features_scaled.shape[0],
+                self.autoencoder.encoder.layers[-1].output_shape[-1],
+            )
+        )
+        i: int = 0
+        while i < all_features_scaled.shape[0]:
+            batch: np.ndarray = all_features_scaled[i : i + batch_size]
+            self.reduced_features[i : i + batch.shape[0]] = self.autoencoder.encoder(
+                batch
+            ).numpy()
+            i += batch.shape[0]
+
+        # self.reduced_features = self.autoencoder.encoder.predict(
+        #     self.min_max_scaler.transform(features)
+        # ).numpy()
 
         return self.reduced_features
