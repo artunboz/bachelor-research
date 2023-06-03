@@ -1,4 +1,3 @@
-import gc
 from typing import cast
 
 import numpy as np
@@ -58,37 +57,8 @@ class AutoencoderReducer(AbstractReducer):
             validation_data=(scaled_test, scaled_test),
         )
 
-        all_features_scaled: np.ndarray = self.min_max_scaler.transform(features)
-        first_half: np.ndarray = all_features_scaled[:first_half_size]
-        second_half: np.ndarray = all_features_scaled[first_half_size:]
-        np.save(f"{features_dir}/first_half.npy", first_half)
-        np.save(f"{features_dir}/second_half.npy", second_half)
-        del features, first_half, second_half, all_features_scaled
-        gc.collect()
-
-        self.reduced_features = np.empty(
-            shape=(
-                n_samples,
-                self.autoencoder.encoder.layers[-1].output_shape[-1],
-            )
-        )
-
-        first_half: np.ndarray = np.load(f"{features_dir}/first_half.npy")
-        self.reduced_features[:first_half_size] = self.autoencoder.encoder.predict(
-            first_half
+        self.reduced_features = self.autoencoder.encoder.predict(
+            self.min_max_scaler.transform(features)
         ).numpy()
-        del first_half
-        gc.collect()
-
-        second_half: np.ndarray = np.load(f"{features_dir}/second_half.npy")
-        self.reduced_features[first_half_size:] = self.autoencoder.encoder.predict(
-            second_half
-        ).numpy()
-        del second_half
-        gc.collect()
-
-        # self.reduced_features = self.autoencoder.encoder.predict(
-        #     self.min_max_scaler.transform(features)
-        # ).numpy()
 
         return self.reduced_features

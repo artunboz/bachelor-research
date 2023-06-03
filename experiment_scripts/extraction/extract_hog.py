@@ -5,8 +5,8 @@ from src.features.global_features.hog_feature import HOGFeature
 
 image_folder_path = f"{DATA_DIR}/extracted_images/face_images"
 
-resize_size_space = [(64, 64), (64, 128)]
-orientations_space = [4, 9]
+resize_size_space = [(64, 64)]
+orientations_space = [6, 9]
 pixels_per_cell_space = [(8, 8), (16, 16)]
 cells_per_block_space = [(2, 2), (3, 3)]
 block_norm_space = ["L1", "L1-sqrt", "L2", "L2-Hys"]
