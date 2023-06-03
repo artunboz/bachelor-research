@@ -9,7 +9,7 @@ from src.evaluation.evaluator import Evaluator
 
 clustering_type = "kmeans"
 runs = ["run_0", "run_1", "run_2"]
-root_folder = f"{DATA_DIR}/orb"
+root_folder = f"{DATA_DIR}/rgb"
 eval_folders = sorted(os.listdir(root_folder))
 if "results" in eval_folders:
     eval_folders.remove("results")

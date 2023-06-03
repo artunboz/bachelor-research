@@ -7,7 +7,7 @@ from src.clustering.kmeans_clustering import KMeansClustering
 
 n_clusters_space = [12, 13, 14]
 
-root_folder = f"{DATA_DIR}/orb"
+root_folder = f"{DATA_DIR}/rgb"
 eval_folders = sorted(os.listdir(root_folder))
 eval_folders.remove("configs.csv")
 

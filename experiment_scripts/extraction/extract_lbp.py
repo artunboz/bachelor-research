@@ -16,9 +16,9 @@ for i, (resize_size, r, method) in enumerate(
     product(resize_size_space, r_space, method_space)
 ):
     p = 8 * r
-    # lbp = LBPFeature(resize_size=resize_size, p=p, r=r, method=method)
-    # lbp.extract_features(image_folder_path=image_folder_path)
-    # lbp.save_features(f"{DATA_DIR}/lbp/run_{i}")
+    lbp = LBPFeature(resize_size=resize_size, p=p, r=r, method=method)
+    lbp.extract_features(image_folder_path=image_folder_path)
+    lbp.save_features(f"{DATA_DIR}/lbp/run_{i}")
 
     configs_df.loc[i] = {
         "name": f"run_{i}",

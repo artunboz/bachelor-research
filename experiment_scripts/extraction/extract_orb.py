@@ -58,20 +58,20 @@ for i, (
         fast_threshold_space,
     )
 ):
-    # orb = ORBFeature(
-    #     resize_size=resize_size,
-    #     quantization_method=quantization_method,
-    #     n_components_space=n_components_space,
-    #     n_features=n_features,
-    #     scale_factor=scale_factor,
-    #     n_levels=n_levels,
-    #     first_level=first_level,
-    #     wta_k=wta_k,
-    #     patch_size=patch_size,
-    #     fast_threshold=fast_threshold,
-    # )
-    # orb.extract_features(image_folder_path=image_folder_path)
-    # orb.save_features(f"{DATA_DIR}/orb/run_{i}")
+    orb = ORBFeature(
+        resize_size=resize_size,
+        quantization_method=quantization_method,
+        n_components_space=n_components_space,
+        n_features=n_features,
+        scale_factor=scale_factor,
+        n_levels=n_levels,
+        first_level=first_level,
+        wta_k=wta_k,
+        patch_size=patch_size,
+        fast_threshold=fast_threshold,
+    )
+    orb.extract_features(image_folder_path=image_folder_path)
+    orb.save_features(f"{DATA_DIR}/orb/run_{i}")
 
     configs_df.loc[i] = {
         "name": f"run_{i}",
