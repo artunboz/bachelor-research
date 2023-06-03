@@ -18,6 +18,10 @@ for i, (resize_size, hist_size) in enumerate(
     rgb_hist.extract_features(image_folder_path=image_folder_path)
     rgb_hist.save_features(f"{DATA_DIR}/rgb/run_{i}")
 
-    configs_df.loc[i] = {"name": f"run_{i}", "hist_size": hist_size}
+    configs_df.loc[i] = {
+        "name": f"run_{i}",
+        "resize_size": resize_size,
+        "hist_size": hist_size,
+    }
 
 configs_df.to_csv(f"{DATA_DIR}/rgb/configs.csv", index=False)
