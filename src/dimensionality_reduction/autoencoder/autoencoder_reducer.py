@@ -27,7 +27,7 @@ class AutoencoderReducer(AbstractReducer):
         self.min_max_scaler: MinMaxScaler = MinMaxScaler()
 
     def reduce_dimensions(
-        self, features_dir: str, epochs: int = 10, batch_size: int = 32
+        self, features_dir: str, epochs: int = 10, batch_size: int = 256
     ) -> np.ndarray:
         """Reduces the dimensions of the given samples.
 
