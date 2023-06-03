@@ -13,4 +13,3 @@ def _load_feature(feature_path: str) -> dict[str, Any]:
     features: np.ndarray = np.load(f"{feature_path}/features.npy")
     with open(f"{feature_path}/feature_config.json", mode="r") as f:
         features_config: dict = json.load(f)
-

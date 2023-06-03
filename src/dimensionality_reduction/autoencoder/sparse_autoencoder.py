@@ -1,4 +1,4 @@
-from tensorflow.python.keras import Model
+from tensorflow.python.keras import Model, Sequential
 from tensorflow.python.keras import backend as K
 from tensorflow.python.keras import initializers, layers, regularizers
 
@@ -16,29 +16,37 @@ class SparseAutoencoder(Model):
         :param p: A float indicating the sparsity proportion value.
         """
         super().__init__(name="autoencoder")
-        self.encoder: layers.Dense = layers.Dense(
-            latent_dim,
-            activation="sigmoid",
-            kernel_initializer=initializers.initializers_v2.RandomNormal(
-                mean=0.0, stddev=0.01
-            ),
-            bias_initializer=initializers.initializers_v2.RandomNormal(
-                mean=0.0, stddev=0.01
-            ),
-            kernel_regularizer=regularizers.l2(lambda_ / 2),
-            activity_regularizer=_get_sparse_regularizer(beta, p),
+        self.encoder: Sequential = Sequential(
+            [
+                layers.Dense(
+                    latent_dim,
+                    activation="sigmoid",
+                    kernel_initializer=initializers.initializers_v2.RandomNormal(
+                        mean=0.0, stddev=0.01
+                    ),
+                    bias_initializer=initializers.initializers_v2.RandomNormal(
+                        mean=0.0, stddev=0.01
+                    ),
+                    kernel_regularizer=regularizers.l2(lambda_ / 2),
+                    activity_regularizer=_get_sparse_regularizer(beta, p),
+                )
+            ],
             name="encoder",
         )
-        self.decoder: layers.Dense = layers.Dense(
-            output_dim,
-            activation="sigmoid",
-            kernel_initializer=initializers.initializers_v2.RandomNormal(
-                mean=0.0, stddev=0.01
-            ),
-            bias_initializer=initializers.initializers_v2.RandomNormal(
-                mean=0.0, stddev=0.01
-            ),
-            kernel_regularizer=regularizers.l2(lambda_ / 2),
+        self.decoder: Sequential = Sequential(
+            [
+                layers.Dense(
+                    output_dim,
+                    activation="sigmoid",
+                    kernel_initializer=initializers.initializers_v2.RandomNormal(
+                        mean=0.0, stddev=0.01
+                    ),
+                    bias_initializer=initializers.initializers_v2.RandomNormal(
+                        mean=0.0, stddev=0.01
+                    ),
+                    kernel_regularizer=regularizers.l2(lambda_ / 2),
+                )
+            ],
             name="decoder",
         )
 
