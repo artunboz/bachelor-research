@@ -10,16 +10,22 @@ resize_size_space = [(48, 48)]
 r_space = [1, 2, 3]
 method_space = ["default", "ror", "uniform"]
 
-configs_df = pd.DataFrame(columns=["resize_size", "p", "r", "method"])
+configs_df = pd.DataFrame(columns=["name", "resize_size", "p", "r", "method"])
 
 for i, (resize_size, r, method) in enumerate(
     product(resize_size_space, r_space, method_space)
 ):
-    p = 8 * r
-    lbp = LBPFeature(resize_size=resize_size, p=p, r=r, method=method)
-    lbp.extract_features(image_folder_path=image_folder_path)
-    lbp.save_features(f"{DATA_DIR}/lbp/run_{i}")
+    # p = 8 * r
+    # lbp = LBPFeature(resize_size=resize_size, p=p, r=r, method=method)
+    # lbp.extract_features(image_folder_path=image_folder_path)
+    # lbp.save_features(f"{DATA_DIR}/lbp/run_{i}")
 
-    configs_df.loc[i] = {"resize_size": resize_size, "p": p, "r": r, "method": method}
+    configs_df.loc[i] = {
+        "name": f"run_{i}",
+        "resize_size": resize_size,
+        "p": p,
+        "r": r,
+        "method": method,
+    }
 
 configs_df.to_csv(f"{DATA_DIR}/lbp/configs.csv", index=False)

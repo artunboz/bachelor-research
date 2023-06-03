@@ -19,6 +19,7 @@ fast_threshold_space = [20]  # default
 
 configs_df = pd.DataFrame(
     columns=[
+        "name",
         "resize_size",
         "quantization_method",
         "n_components_space",
@@ -73,6 +74,7 @@ for i, (
     # orb.save_features(f"{DATA_DIR}/orb/run_{i}")
 
     configs_df.loc[i] = {
+        "name": f"run_{i}",
         "resize_size": resize_size,
         "quantization_method": quantization_method,
         "n_components_space": n_components_space,

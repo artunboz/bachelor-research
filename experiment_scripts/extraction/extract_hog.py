@@ -14,6 +14,7 @@ block_norm_space = ["L1", "L1-sqrt", "L2", "L2-Hys"]
 
 configs_df = pd.DataFrame(
     columns=[
+        "name",
         "resize_size",
         "orientations",
         "pixels_per_cell",
@@ -37,17 +38,18 @@ for i, (
         block_norm_space,
     )
 ):
-    hog = HOGFeature(
-        resize_size=resize_size,
-        orientations=orientations,
-        pixels_per_cell=pixels_per_cell,
-        cells_per_block=cells_per_block,
-        block_norm=block_norm,
-    )
-    hog.extract_features(image_folder_path=image_folder_path)
-    hog.save_features(f"{DATA_DIR}/hog/run_{i}")
+    # hog = HOGFeature(
+    #     resize_size=resize_size,
+    #     orientations=orientations,
+    #     pixels_per_cell=pixels_per_cell,
+    #     cells_per_block=cells_per_block,
+    #     block_norm=block_norm,
+    # )
+    # hog.extract_features(image_folder_path=image_folder_path)
+    # hog.save_features(f"{DATA_DIR}/hog/run_{i}")
 
     configs_df.loc[i] = {
+        "name": f"run_{i}",
         "resize_size": resize_size,
         "orientations": orientations,
         "pixels_per_cell": pixels_per_cell,
