@@ -1,3 +1,4 @@
+import gc
 from typing import cast
 
 import numpy as np
@@ -38,6 +39,10 @@ class AutoencoderReducer(AbstractReducer):
             the samples in a latent space with a lower dimensionality.
         """
         features: np.ndarray = np.load(f"{features_dir}/features.npy")
+
+        n_samples: int = features.shape[0]
+        first_half_size: int = n_samples // 2
+
         train, test = train_test_split(features, test_size=0.1)
         self.min_max_scaler = self.min_max_scaler.fit(train)
         self.min_max_scaler = cast(MinMaxScaler, self.min_max_scaler)
@@ -54,19 +59,33 @@ class AutoencoderReducer(AbstractReducer):
         )
 
         all_features_scaled: np.ndarray = self.min_max_scaler.transform(features)
+        first_half: np.ndarray = all_features_scaled[:first_half_size]
+        second_half: np.ndarray = all_features_scaled[first_half_size:]
+        np.save(f"{features_dir}/first_half.npy", first_half)
+        np.save(f"{features_dir}/second_half.npy", second_half)
+        del features, first_half, second_half, all_features_scaled
+        gc.collect()
+
         self.reduced_features = np.empty(
             shape=(
-                all_features_scaled.shape[0],
+                n_samples,
                 self.autoencoder.encoder.layers[-1].output_shape[-1],
             )
         )
-        i: int = 0
-        while i < all_features_scaled.shape[0]:
-            batch: np.ndarray = all_features_scaled[i : i + batch_size]
-            self.reduced_features[i : i + batch.shape[0]] = self.autoencoder.encoder(
-                batch
-            ).numpy()
-            i += batch.shape[0]
+
+        first_half: np.ndarray = np.load(f"{features_dir}/first_half.npy")
+        self.reduced_features[:first_half_size] = self.autoencoder.encoder.predict(
+            first_half
+        ).numpy()
+        del first_half
+        gc.collect()
+
+        second_half: np.ndarray = np.load(f"{features_dir}/second_half.npy")
+        self.reduced_features[first_half_size:] = self.autoencoder.encoder.predict(
+            second_half
+        ).numpy()
+        del second_half
+        gc.collect()
 
         # self.reduced_features = self.autoencoder.encoder.predict(
         #     self.min_max_scaler.transform(features)
