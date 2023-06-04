@@ -22,5 +22,5 @@ for run in sorted(os.listdir(root_folder)):
     config_dict["name"] = run
     combined_results.append(config_dict)
 
-configs_df = pd.DataFrame(combined_results)
-configs_df.to_csv(f"{root_folder}/results/configs.csv", index=False)
+configs_df = pd.DataFrame(combined_results).set_index("name")
+configs_df.to_csv(f"{root_folder}/results/configs.csv")
