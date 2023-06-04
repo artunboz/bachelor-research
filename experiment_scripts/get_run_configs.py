@@ -19,7 +19,7 @@ for run in os.listdir(root_folder):
 combined_results = []
 for file in files:
     with open(file, mode="r") as f:
-        combined_results.append(json.load(f)[0])
+        combined_results.append(json.load(f))
 
 configs_df = pd.DataFrame(combined_results)
-configs_df.to_csv(f"{root_folder}/results/configs.csv")
+configs_df.to_csv(f"{root_folder}/results/configs.csv", index=False)
