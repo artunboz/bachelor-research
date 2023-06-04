@@ -11,15 +11,16 @@ parser.add_argument("feature")
 args = parser.parse_args()
 
 root_folder = f"{DATA_DIR}/{args.feature}"
-files = []
-for run in os.listdir(root_folder):
-    if run.startswith("run_"):
-        files.append(f"{root_folder}/{run}/feature_config.json")
 
 combined_results = []
-for file in files:
-    with open(file, mode="r") as f:
-        combined_results.append(json.load(f))
+for run in sorted(os.listdir(root_folder)):
+    if not run.startswith("run_"):
+        continue
+
+    with open(f"{root_folder}/{run}/feature_config.json", mode="r") as f:
+        config_dict = json.load(f)
+    config_dict["name"] = run
+    combined_results.append(config_dict)
 
 configs_df = pd.DataFrame(combined_results)
 configs_df.to_csv(f"{root_folder}/results/configs.csv", index=False)
