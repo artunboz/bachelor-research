@@ -27,7 +27,7 @@ class AutoencoderReducer(AbstractReducer):
         self.min_max_scaler: MinMaxScaler = MinMaxScaler()
 
     def reduce_dimensions(
-        self, features_dir: str, epochs: int = 10, batch_size: int = 32
+        self, features_dir: str, epochs: int = 10, batch_size: int = 256
     ) -> np.ndarray:
         """Reduces the dimensions of the given samples.
 
@@ -38,6 +38,10 @@ class AutoencoderReducer(AbstractReducer):
             the samples in a latent space with a lower dimensionality.
         """
         features: np.ndarray = np.load(f"{features_dir}/features.npy")
+
+        n_samples: int = features.shape[0]
+        first_half_size: int = n_samples // 2
+
         train, test = train_test_split(features, test_size=0.1)
         self.min_max_scaler = self.min_max_scaler.fit(train)
         self.min_max_scaler = cast(MinMaxScaler, self.min_max_scaler)
@@ -52,7 +56,8 @@ class AutoencoderReducer(AbstractReducer):
             batch_size=batch_size,
             validation_data=(scaled_test, scaled_test),
         )
-        self.reduced_features = self.autoencoder.encoder(
+
+        self.reduced_features = self.autoencoder.encoder.predict(
             self.min_max_scaler.transform(features)
         ).numpy()
 

@@ -1,5 +1,6 @@
 import json
 import os
+from argparse import ArgumentParser
 
 import pandas as pd
 from tqdm import tqdm
@@ -7,19 +8,26 @@ from tqdm import tqdm
 from paths import DATA_DIR
 from src.evaluation.evaluator import Evaluator
 
+parser = ArgumentParser()
+parser.add_argument("feature")
+parser.add_argument("n_runs", type=int)
+args = parser.parse_args()
+
 clustering_type = "kmeans"
-runs = ["run_0", "run_1", "run_2", "run_3", "run_4"]
-root_folder = f"{DATA_DIR}/hog"
+root_folder = f"{DATA_DIR}/{args.feature}"
 eval_folders = sorted(os.listdir(root_folder))
 if "results" in eval_folders:
     eval_folders.remove("results")
+if "configs.csv" in eval_folders:
+    eval_folders.remove("configs.csv")
 
-for run in runs:
+for i in range(args.n_runs):
+    # Compute results.
     for folder in tqdm(eval_folders, desc="Evaluated Folders"):
         folder_path = f"{root_folder}/{folder}"
         evaluator = Evaluator(
             features_path=f"{folder_path}/features.npy",
-            cluster_labels_folder_path=f"{folder_path}/clustering/{clustering_type}/{run}",
+            cluster_labels_folder_path=f"{folder_path}/clustering/{clustering_type}/run_{i}",
             image_names_path=f"{root_folder}/{folder}/image_names.pickle",
             ground_truth_path=f"{DATA_DIR}/labelled_faces/clean_labels.csv",
         )
@@ -30,7 +38,7 @@ for run in runs:
         columns=[
             "name",
             "image_count",
-            # "silhouette",
+            "silhouette",
             # "calinski_harabasz",
             "davies_bouldin",
             # "precision",
@@ -38,10 +46,12 @@ for run in runs:
             "f1",
         ]
     )
-    for i, folder in enumerate(eval_folders):
+    # Aggregate results.
+    for folder in eval_folders:
         folder_path = f"{root_folder}/{folder}"
         with open(
-            f"{folder_path}/clustering/{clustering_type}/{run}/metrics.json", mode="r"
+                f"{folder_path}/clustering/{clustering_type}/run_{i}/metrics.json",
+                mode="r"
         ) as f:
             d = json.load(f)
             d["name"] = folder
@@ -51,4 +61,4 @@ for run in runs:
     results_path = f"{root_folder}/results"
     if not os.path.isdir(results_path):
         os.mkdir(results_path)
-    all_results_df.to_csv(f"{results_path}/{run}_results.csv", index=False)
+    all_results_df.to_csv(f"{results_path}/run_{i}_results.csv", index=False)
