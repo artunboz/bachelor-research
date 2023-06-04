@@ -22,6 +22,7 @@ if "configs.csv" in eval_folders:
     eval_folders.remove("configs.csv")
 
 for i in range(args.n_runs):
+    # Compute results.
     for folder in tqdm(eval_folders, desc="Evaluated Folders"):
         folder_path = f"{root_folder}/{folder}"
         evaluator = Evaluator(
@@ -45,10 +46,12 @@ for i in range(args.n_runs):
             "f1",
         ]
     )
-    for j, folder in enumerate(eval_folders):
+    # Aggregate results.
+    for folder in eval_folders:
         folder_path = f"{root_folder}/{folder}"
         with open(
-            f"{folder_path}/clustering/{clustering_type}/run_{j}/metrics.json", mode="r"
+                f"{folder_path}/clustering/{clustering_type}/run_{i}/metrics.json",
+                mode="r"
         ) as f:
             d = json.load(f)
             d["name"] = folder
