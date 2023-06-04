@@ -45,10 +45,10 @@ for i in range(args.n_runs):
             "f1",
         ]
     )
-    for i, folder in enumerate(eval_folders):
+    for j, folder in enumerate(eval_folders):
         folder_path = f"{root_folder}/{folder}"
         with open(
-            f"{folder_path}/clustering/{clustering_type}/run_{i}/metrics.json", mode="r"
+            f"{folder_path}/clustering/{clustering_type}/run_{j}/metrics.json", mode="r"
         ) as f:
             d = json.load(f)
             d["name"] = folder
