@@ -14,7 +14,7 @@ root_folder = f"{DATA_DIR}/{args.feature}"
 files = []
 for run in os.listdir(root_folder):
     if run.startswith("run_"):
-        files.append(f"{root_folder}/{run}")
+        files.append(f"{root_folder}/{run}/feature_config.json")
 
 combined_results = []
 for file in files:
