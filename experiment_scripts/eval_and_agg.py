@@ -10,7 +10,7 @@ from src.evaluation.evaluator import Evaluator
 
 parser = ArgumentParser()
 parser.add_argument("feature")
-parser.add_argument("n_runs")
+parser.add_argument("n_runs", type=int)
 args = parser.parse_args()
 
 clustering_type = "kmeans"
