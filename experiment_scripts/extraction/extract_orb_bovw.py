@@ -6,7 +6,7 @@ from src.features.local_features.orb_feature import ORBFeature
 
 image_folder_path = f"{DATA_DIR}/extracted_images/face_images"
 
-resize_size_space = [(128, 128), (256, 256)]
+resize_size_space = [(256, 256)]
 quantization_method_space = ["bovw"]
 n_components_space_space = [[10], [20], [50]]
 n_features_space = [10, 20]
