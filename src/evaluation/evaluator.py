@@ -5,7 +5,6 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (
-    calinski_harabasz_score,
     davies_bouldin_score,
     silhouette_score,
 )
@@ -45,7 +44,6 @@ class Evaluator:
     def compute_metrics(self) -> None:
         """Computes the following scores:
         - silhouette score
-        - calinski-harabasz score
         - davies-bouldin score
         - pairwise precision
         - pairwise recall
@@ -55,24 +53,18 @@ class Evaluator:
 
         self.scores["image_count"] = self.image_count
         self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
-        # self.scores["calinski_harabasz"] = calinski_harabasz_score(
-        #     self.features, self.cluster_labels
-        # )
         self.scores["davies_bouldin"] = davies_bouldin_score(
             self.features, self.cluster_labels
         )
-        # self.scores["precision"] = metrics.pairwise_precision(
-        #     self.test_image_actual_labels, self.test_image_cluster_labels
-        # )
-        # self.scores["recall"] = metrics.pairwise_recall(
-        #     self.test_image_actual_labels, self.test_image_cluster_labels
-        # )
+        self.scores["precision"] = metrics.pairwise_precision(
+            self.test_image_actual_labels, self.test_image_cluster_labels
+        )
+        self.scores["recall"] = metrics.pairwise_recall(
+            self.test_image_actual_labels, self.test_image_cluster_labels
+        )
         self.scores["f1"] = metrics.pairwise_f1(
             self.test_image_actual_labels, self.test_image_cluster_labels
         )
-        # self.scores["precision"] = 0
-        # self.scores["recall"] = 0
-        # self.scores["f1"] = 0
 
     def save_metrics(self) -> None:
         """Saves the scores in JSON format to the self.cluster_labels_folder_path
