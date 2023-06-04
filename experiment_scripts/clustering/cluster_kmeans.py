@@ -1,13 +1,18 @@
 import os
+from argparse import ArgumentParser
 
 from tqdm import tqdm
 
 from paths import DATA_DIR
 from src.clustering.kmeans_clustering import KMeansClustering
 
+parser = ArgumentParser()
+parser.add_argument("feature")
+args = parser.parse_args()
+
 n_clusters_space = [12, 13, 14]
 
-root_folder = f"{DATA_DIR}/rgb"
+root_folder = f"{DATA_DIR}/{args.feature}"
 eval_folders = sorted(os.listdir(root_folder))
 eval_folders.remove("configs.csv")
 
