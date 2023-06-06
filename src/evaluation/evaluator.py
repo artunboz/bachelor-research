@@ -75,7 +75,7 @@ class Evaluator:
             raise ValueError("Scores have not been computed.")
 
         with open(f"{self.cluster_labels_folder_path}/metrics.json", mode="w") as f:
-            json.dump(self.scores, f)
+            json.dump({k: str(v) for k, v in self.scores.items()}, f)
 
     def _load_data(self) -> None:
         self.features = np.load(self.features_path)
