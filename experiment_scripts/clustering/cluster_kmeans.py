@@ -7,14 +7,13 @@ from paths import DATA_DIR
 from src.clustering.kmeans_clustering import KMeansClustering
 
 parser = ArgumentParser()
-parser.add_argument("feature")
+parser.add_argument("--feature")
 args = parser.parse_args()
 
-n_clusters_space = [12, 13, 14]
+n_clusters_space = [12]
 
 root_folder = f"{DATA_DIR}/{args.feature}"
 eval_folders = sorted(os.listdir(root_folder))
-eval_folders.remove("configs.csv")
 
 for i, n_clusters in enumerate(n_clusters_space):
     print(f"Calculating n_clusters={n_clusters}")
