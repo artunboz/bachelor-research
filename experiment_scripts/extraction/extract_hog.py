@@ -1,4 +1,3 @@
-import pandas as pd
 from tqdm.contrib.itertools import product
 
 from paths import DATA_DIR
@@ -11,17 +10,6 @@ orientations_space = [6, 9]
 pixels_per_cell_space = [(8, 8), (16, 16)]
 cells_per_block_space = [(2, 2), (3, 3)]
 block_norm_space = ["L1", "L1-sqrt", "L2", "L2-Hys"]
-
-configs_df = pd.DataFrame(
-    columns=[
-        "name",
-        "resize_size",
-        "orientations",
-        "pixels_per_cell",
-        "cells_per_block",
-        "block_norm",
-    ]
-)
 
 for i, (
     resize_size,
@@ -47,14 +35,3 @@ for i, (
     )
     hog.extract_features(image_folder_path=image_folder_path)
     hog.save_features(f"{DATA_DIR}/hog/run_{i}")
-
-    configs_df.loc[i] = {
-        "name": f"run_{i}",
-        "resize_size": resize_size,
-        "orientations": orientations,
-        "pixels_per_cell": pixels_per_cell,
-        "cells_per_block": cells_per_block,
-        "block_norm": block_norm,
-    }
-
-configs_df.to_csv(f"{DATA_DIR}/hog/configs.csv", index=False)

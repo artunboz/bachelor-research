@@ -39,10 +39,9 @@ for i in range(args.n_runs):
             "name",
             "image_count",
             "silhouette",
-            # "calinski_harabasz",
             "davies_bouldin",
-            # "precision",
-            # "recall",
+            "precision",
+            "recall",
             "f1",
         ]
     )
@@ -50,8 +49,7 @@ for i in range(args.n_runs):
     for folder in eval_folders:
         folder_path = f"{root_folder}/{folder}"
         with open(
-                f"{folder_path}/clustering/{clustering_type}/run_{i}/metrics.json",
-                mode="r"
+            f"{folder_path}/clustering/{clustering_type}/run_{i}/metrics.json", mode="r"
         ) as f:
             d = json.load(f)
             d["name"] = folder

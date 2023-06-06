@@ -11,6 +11,10 @@ def pairwise_f1(actual_labels: np.ndarray, cluster_labels: np.ndarray) -> float:
 
     precision: float = tp / (tp + fp)
     recall: float = tp / (tp + fn)
+    return pairwise_f1_from_precision_and_recall(precision, recall)
+
+
+def pairwise_f1_from_precision_and_recall(precision: float, recall: float) -> float:
     return (2 * precision * recall) / (precision + recall)
 
 
