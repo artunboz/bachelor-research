@@ -47,7 +47,7 @@ def _load_regular_feature(feature_path: str) -> dict[str, Any]:
 
 
 def _load_reduced_feature(feature_path: str) -> dict[str, Any]:
-    parent_path: str = Path(feature_path).parent.absolute()
+    parent_path: str = Path(feature_path).parent.parent.absolute()
     features: np.ndarray = np.load(f"{feature_path}/features.npy")
     with open(f"{parent_path}/feature_config.json", mode="r") as f:
         feature_config: dict = json.load(f)
@@ -70,7 +70,7 @@ def _combine_features(feature_files: dict[str, dict[str, Any]]) -> dict[str, Any
     for name, files in feature_files.items():
         combined_config_dict[name] = files["feature_config"]
     combined_config_dict["feature_dim"] = sum(
-        [v["feature_dim"] for v in combined_config_dict.values()]
+        [v["features"].shape[1] for v in feature_files.values()]
     )
 
     # Get the images for which all feature methods successfully computed features.
