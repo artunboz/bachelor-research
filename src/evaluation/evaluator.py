@@ -1,5 +1,7 @@
 import json
+import os
 import pickle
+from pathlib import Path
 from typing import Optional
 
 import numpy as np
@@ -81,8 +83,15 @@ class Evaluator:
             f"{self.cluster_labels_folder_path}/cluster_labels.npy"
         )
 
-        with open(f"{self.image_names_path}", mode="rb") as f:
-            image_names = pickle.load(f)
+        if os.path.exists(self.image_names_path):
+            with open(self.image_names_path, mode="rb") as f:
+                image_names = pickle.load(f)
+        else:
+            parent_path: str = Path(
+                self.image_names_path
+            ).parent.parent.parent.absolute()
+            with open(f"{parent_path}/image_names.pickle", mode="rb") as f:
+                image_names = pickle.load(f)
         self.image_count = len(image_names)
 
         actual_labels_df: pd.DataFrame = pd.read_csv(
