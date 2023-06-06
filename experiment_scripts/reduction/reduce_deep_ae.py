@@ -9,7 +9,6 @@ from src.dimensionality_reduction.autoencoder.deep_autoencoder import DeepAutoen
 
 parser = ArgumentParser()
 parser.add_argument("--feature-path", dest="feature_names")
-parser.add_argument("--save-folder", dest="save_folder")
 args = parser.parse_args()
 
 features_dir = f"{DATA_DIR}/{args.feature_path}"
