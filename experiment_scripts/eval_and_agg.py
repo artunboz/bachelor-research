@@ -9,8 +9,8 @@ from paths import DATA_DIR
 from src.evaluation.evaluator import Evaluator
 
 parser = ArgumentParser()
-parser.add_argument("feature")
-parser.add_argument("n_runs", type=int)
+parser.add_argument("--feature")
+parser.add_argument("--n-runs", type=int, dest="n_runs")
 args = parser.parse_args()
 
 clustering_type = "kmeans"
