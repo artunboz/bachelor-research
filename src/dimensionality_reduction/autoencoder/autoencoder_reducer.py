@@ -59,6 +59,6 @@ class AutoencoderReducer(AbstractReducer):
 
         self.reduced_features = self.autoencoder.encoder.predict(
             self.min_max_scaler.transform(features)
-        ).numpy()
+        )
 
         return self.reduced_features
