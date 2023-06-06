@@ -89,7 +89,7 @@ class Evaluator:
         else:
             parent_path: str = Path(
                 self.image_names_path
-            ).parent.parent.parent.absolute()
+            ).parent.parent.parent.parent.absolute()
             with open(f"{parent_path}/image_names.pickle", mode="rb") as f:
                 image_names = pickle.load(f)
         self.image_count = len(image_names)
