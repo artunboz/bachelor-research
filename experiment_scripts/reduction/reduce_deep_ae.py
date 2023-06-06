@@ -1,4 +1,5 @@
 import json
+from argparse import ArgumentParser
 
 from paths import DATA_DIR
 from src.dimensionality_reduction.autoencoder.autoencoder_reducer import (
@@ -6,7 +7,12 @@ from src.dimensionality_reduction.autoencoder.autoencoder_reducer import (
 )
 from src.dimensionality_reduction.autoencoder.deep_autoencoder import DeepAutoencoder
 
-features_dir = f"{DATA_DIR}/lbp/run_46"
+parser = ArgumentParser()
+parser.add_argument("--feature-path", dest="feature_names")
+parser.add_argument("--save-folder", dest="save_folder")
+args = parser.parse_args()
+
+features_dir = f"{DATA_DIR}/{args.feature_path}"
 reductions_dir = f"{features_dir}/reductions/deep_ae"
 
 layer_dims_space = [[128], [256, 128], [512, 256, 128], [1024, 512, 256, 128]]
