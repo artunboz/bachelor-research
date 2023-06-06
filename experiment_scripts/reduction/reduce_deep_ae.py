@@ -22,7 +22,7 @@ with open(f"{features_dir}/feature_config.json", mode="r") as f:
 for i, layer_dims in enumerate(layer_dims_space):
     ae = DeepAutoencoder(layer_dims=layer_dims, output_dim=output_dim)
     reducer = AutoencoderReducer(ae, optimizer="adam", loss="mse")
-    reducer.reduce_dimensions(features_dir=features_dir, epochs=30, batch_size=512)
+    reducer.reduce_dimensions(features_dir=features_dir, epochs=30, batch_size=256)
     reducer.save_reduced_features(f"{reductions_dir}/run_{i}")
     with open(f"{reductions_dir}/run_{i}/reducer_config.json", mode="r") as f:
         reducer_config = json.load(f)
