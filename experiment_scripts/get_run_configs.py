@@ -7,7 +7,7 @@ import pandas as pd
 from paths import DATA_DIR
 
 parser = ArgumentParser()
-parser.add_argument("feature")
+parser.add_argument("--feature")
 args = parser.parse_args()
 
 root_folder = f"{DATA_DIR}/{args.feature}"

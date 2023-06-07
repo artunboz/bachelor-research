@@ -11,7 +11,7 @@ def combine_and_save(
     feature_folder_paths: dict[str, str], save_folder_path: str
 ) -> None:
     if not os.path.exists(save_folder_path):
-        os.mkdir(save_folder_path)
+        os.makedirs(save_folder_path)
 
     feature_files: dict[str, dict[str, Any]] = {}
     for feature_name, feature_folder_path in feature_folder_paths.items():
