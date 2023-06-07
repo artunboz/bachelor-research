@@ -1,4 +1,5 @@
 import json
+from argparse import ArgumentParser
 
 from tqdm.contrib.itertools import product
 
@@ -10,7 +11,11 @@ from src.dimensionality_reduction.autoencoder.sparse_autoencoder import (
     SparseAutoencoder,
 )
 
-features_dir = f"{DATA_DIR}/lbp/run_46"
+parser = ArgumentParser()
+parser.add_argument("--feature")
+args = parser.parse_args()
+
+features_dir = f"{DATA_DIR}/{args.feature}"
 reductions_dir = f"{features_dir}/reductions/sparse_ae"
 
 latent_dim_space = [128, 256, 512]
@@ -25,7 +30,7 @@ for i, (latent_dim, lambda_, beta, p) in enumerate(
     product(latent_dim_space, lambda_space, beta_space, p_space)
 ):
     ae = SparseAutoencoder(
-        latent_dim=3, output_dim=output_dim, lambda_=lambda_, beta=beta, p=p
+        latent_dim=latent_dim, output_dim=output_dim, lambda_=lambda_, beta=beta, p=p
     )
     reducer = AutoencoderReducer(ae, optimizer="adam", loss="mse")
     reducer.reduce_dimensions(features_dir=features_dir, epochs=30, batch_size=256)
