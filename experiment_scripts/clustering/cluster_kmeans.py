@@ -7,12 +7,12 @@ from paths import DATA_DIR
 from src.clustering.kmeans_clustering import KMeansClustering
 
 parser = ArgumentParser()
-parser.add_argument("--feature")
+parser.add_argument("--feature-path", dest="feature_path")
 args = parser.parse_args()
 
 n_clusters = 12
 
-root_folder = f"{DATA_DIR}/{args.feature}"
+root_folder = f"{DATA_DIR}/{args.feature_path}"
 eval_folders = sorted(os.listdir(root_folder))
 
 for folder in tqdm(eval_folders, desc="Configurations"):
