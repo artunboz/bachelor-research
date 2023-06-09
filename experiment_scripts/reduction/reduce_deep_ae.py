@@ -16,7 +16,7 @@ args = parser.parse_args()
 features_dir = f"{DATA_DIR}/{args.feature_path}"
 reductions_dir = f"{features_dir}/reductions/deep_ae"
 
-layer_dims_space = [[128], [256], [512, 128]]
+layer_dims_space = [[10], [50], [100], [200], [200, 100], [200, 50], [200, 10]]
 
 with open(f"{features_dir}/feature_config.json", mode="r") as f:
     output_dim = json.load(f)["feature_dim"]

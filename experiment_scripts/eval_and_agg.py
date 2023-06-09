@@ -13,7 +13,7 @@ parser.add_argument("--feature-path", dest="feature_path")
 parser.add_argument("--n-runs", type=int, dest="n_runs")
 args = parser.parse_args()
 
-root_folder = f"{DATA_DIR}/{args.feature_feature}"
+root_folder = f"{DATA_DIR}/{args.feature_path}"
 eval_folders = sorted(os.listdir(root_folder))
 if "results" in eval_folders:
     eval_folders.remove("results")

@@ -18,7 +18,7 @@ args = parser.parse_args()
 features_dir = f"{DATA_DIR}/{args.feature}"
 reductions_dir = f"{features_dir}/reductions/sparse_ae"
 
-latent_dim_space = [128, 256, 512]
+latent_dim_space = [10, 50, 100, 200]
 lambda_space = [0.001, 0.0001]
 beta_space = [2, 3]
 p_space = [0.1, 0.15]
