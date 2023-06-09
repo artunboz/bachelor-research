@@ -9,7 +9,7 @@ parser.add_argument("--feature-path", dest="feature_path")
 args = parser.parse_args()
 
 features_dir = f"{DATA_DIR}/{args.feature_path}"
-reductions_dir = f"{features_dir}/reductions/pca_ae"
+reductions_dir = f"{features_dir}/reductions/pca"
 
 n_components_space = [10, 50, 100, 200]
 
