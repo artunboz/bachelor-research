@@ -1,8 +1,6 @@
 import json
 from argparse import ArgumentParser
 
-from tqdm.contrib.itertools import product
-
 from paths import DATA_DIR
 from src.dimensionality_reduction.autoencoder.autoencoder_reducer import (
     AutoencoderReducer,
