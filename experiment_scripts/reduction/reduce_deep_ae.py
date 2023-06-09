@@ -21,7 +21,7 @@ layer_dims_space = [[128], [256], [512, 128]]
 with open(f"{features_dir}/feature_config.json", mode="r") as f:
     output_dim = json.load(f)["feature_dim"]
 
-for i, (layer_dims, l2) in enumerate(product(layer_dims_space)):
+for i, layer_dims in enumerate(layer_dims_space):
     ae = DeepAutoencoder(layer_dims=layer_dims, output_dim=output_dim)
     reducer = AutoencoderReducer(ae, optimizer="adam", loss="mse")
     reducer.reduce_dimensions(features_dir=features_dir, epochs=30, batch_size=256)
