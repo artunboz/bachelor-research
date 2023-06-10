@@ -1,6 +1,7 @@
 import json
 from argparse import ArgumentParser
 
+from tensorflow.python.framework.errors import OpError
 from tqdm.contrib.itertools import product
 
 from paths import DATA_DIR
@@ -33,7 +34,11 @@ for i, (latent_dim, lambda_, beta, p) in enumerate(
         latent_dim=latent_dim, output_dim=output_dim, lambda_=lambda_, beta=beta, p=p
     )
     reducer = AutoencoderReducer(ae, optimizer="adam", loss="mse")
-    reducer.reduce_dimensions(features_dir=features_dir, epochs=30, batch_size=256)
+    try:
+        reducer.reduce_dimensions(features_dir=features_dir, epochs=30, batch_size=256)
+    except OpError as e:
+        print(f"TENSORFLOW EXCEPTION RAISE AT ITERATION {i}: {e}")
+        continue
     reducer.save_reduced_features(f"{reductions_dir}/run_{i}")
     with open(f"{reductions_dir}/run_{i}/reducer_config.json", mode="r") as f:
         reducer_config = json.load(f)
