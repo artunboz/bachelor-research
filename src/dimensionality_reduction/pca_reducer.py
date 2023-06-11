@@ -13,7 +13,8 @@ class PCAReducer(AbstractReducer):
         :param n_components: An integer indicating the number of features to retain.
         """
         super().__init__()
-        self.pca: PCA = PCA(n_components=n_components)
+        self.n_components: int = n_components
+        self.pca: PCA = PCA(n_components=self.n_components)
 
     def reduce_dimensions(self, features_dir: str) -> np.ndarray:
         """Reduces the dimensions of the given samples using Singular Value
