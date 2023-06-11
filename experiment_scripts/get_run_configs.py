@@ -11,7 +11,7 @@ parser.add_argument("--feature-path", dest="feature_path")
 parser.add_argument("--config-name", dest="config_name")
 args = parser.parse_args()
 
-root_folder = f"{DATA_DIR}/{args.feature}"
+root_folder = f"{DATA_DIR}/{args.feature_path}"
 
 combined_results = []
 for run in sorted(os.listdir(root_folder)):
