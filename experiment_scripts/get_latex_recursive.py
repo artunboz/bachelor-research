@@ -14,7 +14,7 @@ path = f"{DATA_DIR}/{args.root_folder}"
 
 
 def format_run_name(run_name):
-    return run_name.replace("run_", "conf. ")
+    return run_name.replace("run_", "")
 
 
 def format_col_name(col_name):
