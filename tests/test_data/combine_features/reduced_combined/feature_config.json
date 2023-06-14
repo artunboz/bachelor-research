@@ -1,0 +1,1 @@
+{"hog": {"resize_size": "64x64", "feature_dim": 5, "orientations": 6}, "lbp_reduced": {"resize_size": "48x48", "feature_dim": 4, "p": 24, "reducer_config": {"n_components": 2}}, "feature_dim": 7}

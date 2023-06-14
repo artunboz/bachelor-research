@@ -1,0 +1,5 @@
+{
+  "resize_size": "64x64",
+  "feature_dim": 5,
+  "orientations": 6
+}
