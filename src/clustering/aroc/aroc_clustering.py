@@ -5,12 +5,13 @@ from src.clustering.aroc.aroc import aroc
 
 
 class AROClustering(AbstractClustering):
-    def __init__(self, n_neighbours: int, threshold: float, num_proc: int = 16):
+    def __init__(self, n_neighbours: int, threshold: float, num_proc: int = 20):
         """Inits an AROClustering instance.
 
         :param n_neighbours: An integer indicating the number of neighbors to use.
         :param threshold: A float indicating the merging threshold.
-        :param num_proc: An integer indicating the number of cores to use
+        :param num_proc: An integer indicating the number of cores to use. Defaults to
+            20.
         """
         super().__init__()
         self.n_neighbours: int = n_neighbours
