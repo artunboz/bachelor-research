@@ -17,9 +17,10 @@ feature_folder_path = f"{DATA_DIR}/{args.feature_path}"
 clustering_folders_path = (
     f"{DATA_DIR}/{args.feature_path}/clustering/{args.clustering_type}"
 )
+clustering_folders_list = sorted(os.listdir(clustering_folders_path))
 
 # Compute results.
-for folder in tqdm(clustering_folders_path, desc="Evaluated Folders"):
+for folder in tqdm(clustering_folders_list, desc="Evaluated Folders"):
     folder_path = f"{clustering_folders_path}/{folder}"
     evaluator = Evaluator(
         features_path=f"{feature_folder_path}/features.npy",
