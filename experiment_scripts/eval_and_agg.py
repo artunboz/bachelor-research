@@ -51,7 +51,4 @@ for folder in clustering_folders_list:
         d_df = pd.DataFrame([d])
         all_results_df = pd.concat([all_results_df, d_df], ignore_index=True)
 
-results_path = f"{feature_folder_path}/results"
-if not os.path.isdir(results_path):
-    os.mkdir(results_path)
-all_results_df.to_csv(f"{results_path}/{args.clustering_type}_results.csv", index=False)
+all_results_df.to_csv(f"{clustering_folders_path}/results.csv", index=False)
