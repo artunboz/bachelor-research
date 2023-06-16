@@ -43,7 +43,7 @@ all_results_df = pd.DataFrame(
         "f1",
     ]
 )
-for folder in clustering_folders_path:
+for folder in clustering_folders_list:
     folder_path = f"{clustering_folders_path}/{folder}"
     with open(f"{folder_path}/metrics.json", mode="r") as f:
         d = json.load(f)
