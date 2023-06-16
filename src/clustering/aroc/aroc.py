@@ -11,7 +11,7 @@ import numpy as np
 import pyflann
 
 
-def aroc(features, n_neighbours, threshold, num_proc=4):
+def cluster_aroc(features, n_neighbours, threshold, num_proc=4):
     """
     Calculates the pairwise distances between each face and merge all the faces
     with distances below a threshold.
@@ -22,6 +22,8 @@ def aroc(features, n_neighbours, threshold, num_proc=4):
         threshold (float): Threshold
         num_proc (int): Number of process to run simultaneously
     """
+    n_samples: int = len(features)
+
     # k-nearest neighbours using FLANN
     flann = pyflann.FLANN()
     params = flann.build_index(features, algorithm="kdtree", trees=4)
@@ -73,7 +75,7 @@ def aroc(features, n_neighbours, threshold, num_proc=4):
 
         clusters.append(group)
 
-    return clusters
+    return _convert_clusters_to_ndarray(clusters, n_samples)
 
 
 def _pairwise_distance(neighbor_lookup, row_no):
@@ -110,3 +112,11 @@ def _pairwise_distance(neighbor_lookup, row_no):
         distance[0, oa_b] = float(d_ab + d_ba) / min(oa_b, ob_a)
 
     return distance
+
+
+def _convert_clusters_to_ndarray(clusters: list[set], n_samples: int) -> np.ndarray:
+    cluster_labels: np.ndarray = np.empty(n_samples)
+    for i, cluster in enumerate(clusters):
+        for sample in cluster:
+            cluster_labels[sample] = i
+    return cluster_labels

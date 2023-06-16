@@ -1,7 +1,7 @@
 import numpy as np
 
 from src.clustering.abstract_clustering import AbstractClustering
-from src.clustering.aroc.aroc import aroc
+from src.clustering.aroc.aroc import cluster_aroc
 
 
 class AROClustering(AbstractClustering):
@@ -26,7 +26,7 @@ class AROClustering(AbstractClustering):
             in the same order as the input array.
         """
         features: np.ndarray = np.load(f"{features_dir}/features.npy").astype("int32")
-        self.cluster_labels = aroc(
+        self.cluster_labels = cluster_aroc(
             features, self.n_neighbours, self.threshold, self.num_proc
         )
 
