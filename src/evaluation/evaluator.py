@@ -60,6 +60,8 @@ class Evaluator:
             features,
             cluster_labels,
         ) = self._remove_fuzzy_labels()
+        self.scores["cluster_count"] = len(np.unique(cluster_labels))
+
         # self.scores["silhouette"] = silhouette_score(features, cluster_labels)
         # self.scores["davies_bouldin"] = davies_bouldin_score(features, cluster_labels)
 

@@ -38,6 +38,7 @@ all_results_df = pd.DataFrame(
         "image_count",
         "non_fuzzy_count",
         "test_image_count",
+        "cluster_count",
         # "silhouette",
         # "davies_bouldin",
         "precision",
