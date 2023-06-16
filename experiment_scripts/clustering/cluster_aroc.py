@@ -14,8 +14,8 @@ feature_folder_path = f"{DATA_DIR}/{args.feature_path}"
 aroc_folder_path = f"{feature_folder_path}/clustering/aroc"
 os.makedirs(aroc_folder_path)
 
-n_neighbours_space = [100]
-threshold_space = [0.1, 0.5, 1.0, 2.0]
+n_neighbours_space = [200]
+threshold_space = [0.4, 0.5, 0.6]
 
 for i, (n_neighbours, threshold) in enumerate(
     product(n_neighbours_space, threshold_space)
