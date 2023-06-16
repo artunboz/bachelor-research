@@ -119,11 +119,13 @@ def _convert_clusters_to_ndarray(
     clusters: list[set], n_samples: int, min_samples: int
 ) -> np.ndarray:
     cluster_labels: np.ndarray = np.empty(n_samples)
-    for i, cluster in enumerate(clusters):
+    i: int = 0
+    for cluster in clusters:
         if len(cluster) < min_samples:
             for sample in cluster:
                 cluster_labels[sample] = -1
         else:
             for sample in cluster:
                 cluster_labels[sample] = i
+            i += 1
     return cluster_labels

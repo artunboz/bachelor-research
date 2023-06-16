@@ -6,6 +6,7 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
+from sklearn.metrics import davies_bouldin_score, silhouette_score
 
 from src.evaluation import metrics
 
@@ -53,15 +54,21 @@ class Evaluator:
         self.scores["non_fuzzy_count"] = self.image_count - np.count_nonzero(
             self.cluster_labels == -1
         )
-        # self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
-        # self.scores["davies_bouldin"] = davies_bouldin_score(
-        #     self.features, self.cluster_labels
-        # )
+
+        (
+            features,
+            cluster_labels,
+            test_image_actual_labels,
+            test_image_cluster_labels,
+        ) = self._remove_fuzzy_labels()
+
+        # self.scores["silhouette"] = silhouette_score(features, cluster_labels)
+        # self.scores["davies_bouldin"] = davies_bouldin_score(features, cluster_labels)
         self.scores["precision"] = metrics.pairwise_precision(
-            self.test_image_actual_labels, self.test_image_cluster_labels
+            test_image_actual_labels, test_image_cluster_labels
         )
         self.scores["recall"] = metrics.pairwise_recall(
-            self.test_image_actual_labels, self.test_image_cluster_labels
+            test_image_actual_labels, test_image_cluster_labels
         )
         self.scores["f1"] = metrics.pairwise_f1_from_precision_and_recall(
             self.scores["precision"], self.scores["recall"]
@@ -107,3 +114,14 @@ class Evaluator:
         self.test_image_actual_labels: np.ndarray = actual_labels_df[
             actual_labels_df["image_name"].isin(image_names)
         ]["integer_label"].to_numpy()
+
+    def _remove_fuzzy_labels(
+        self,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        non_fuzzy_idx: np.ndarray = self.cluster_labels != -1
+        return (
+            self.features[non_fuzzy_idx],
+            self.cluster_labels[non_fuzzy_idx],
+            self.test_image_actual_labels[non_fuzzy_idx],
+            self.test_image_cluster_labels[non_fuzzy_idx],
+        )
