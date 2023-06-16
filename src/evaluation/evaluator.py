@@ -112,7 +112,7 @@ class Evaluator:
         ]
         self.test_image_cluster_labels: np.ndarray = self.cluster_labels[test_image_idx]
         self.test_image_actual_labels: np.ndarray = actual_labels_df[
-            actual_labels_df["image_name"].isin(image_names)
+            actual_labels_df["image_name"].isin(non_fuzzy_images)
         ]["integer_label"].to_numpy()
 
     def _remove_fuzzy_labels(
