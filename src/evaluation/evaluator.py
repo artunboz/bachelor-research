@@ -54,18 +54,18 @@ class Evaluator:
         self._load_data()
 
         self.scores["image_count"] = self.image_count
-        self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
-        self.scores["davies_bouldin"] = davies_bouldin_score(
-            self.features, self.cluster_labels
-        )
+        # self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
+        # self.scores["davies_bouldin"] = davies_bouldin_score(
+        #     self.features, self.cluster_labels
+        # )
         self.scores["precision"] = metrics.pairwise_precision(
             self.test_image_actual_labels, self.test_image_cluster_labels
         )
         self.scores["recall"] = metrics.pairwise_recall(
             self.test_image_actual_labels, self.test_image_cluster_labels
         )
-        self.scores["f1"] = metrics.pairwise_f1(
-            self.test_image_actual_labels, self.test_image_cluster_labels
+        self.scores["f1"] = metrics.pairwise_f1_from_precision_and_recall(
+            self.scores["precision"], self.scores["recall"]
         )
 
     def save_metrics(self) -> None:

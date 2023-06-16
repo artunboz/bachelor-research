@@ -36,8 +36,8 @@ all_results_df = pd.DataFrame(
     columns=[
         "name",
         "image_count",
-        "silhouette",
-        "davies_bouldin",
+        # "silhouette",
+        # "davies_bouldin",
         "precision",
         "recall",
         "f1",
