@@ -36,7 +36,6 @@ class Evaluator:
         self.scores: dict[str, float] = {}
         self.image_count: Optional[int] = None
         self.features: Optional[np.ndarray] = None
-        self.imag
         self.cluster_labels: Optional[np.ndarray] = None
         self.test_image_actual_labels: Optional[np.ndarray] = None
         self.test_image_cluster_labels: Optional[np.ndarray] = None
@@ -61,9 +60,9 @@ class Evaluator:
             cluster_labels,
         ) = self._remove_fuzzy_labels()
         self.scores["test_image_count"] = len(self.test_image_actual_labels)
-
         # self.scores["silhouette"] = silhouette_score(features, cluster_labels)
         # self.scores["davies_bouldin"] = davies_bouldin_score(features, cluster_labels)
+
         self.scores["precision"] = metrics.pairwise_precision(
             self.test_image_actual_labels, self.test_image_cluster_labels
         )
