@@ -6,10 +6,6 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
-from sklearn.metrics import (
-    davies_bouldin_score,
-    silhouette_score,
-)
 
 from src.evaluation import metrics
 
@@ -54,6 +50,9 @@ class Evaluator:
         self._load_data()
 
         self.scores["image_count"] = self.image_count
+        self.scores["non_fuzzy_count"] = self.image_count - np.count_nonzero(
+            self.cluster_labels == -1
+        )
         # self.scores["silhouette"] = silhouette_score(self.features, self.cluster_labels)
         # self.scores["davies_bouldin"] = davies_bouldin_score(
         #     self.features, self.cluster_labels

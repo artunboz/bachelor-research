@@ -11,7 +11,7 @@ import numpy as np
 import pyflann
 
 
-def cluster_aroc(features, n_neighbours, threshold, num_proc=4):
+def cluster_aroc(features, n_neighbours, threshold, min_samples, num_proc):
     """
     Calculates the pairwise distances between each face and merge all the faces
     with distances below a threshold.
@@ -20,6 +20,7 @@ def cluster_aroc(features, n_neighbours, threshold, num_proc=4):
         features (list): Extracted features to be clustered
         n_neighbours (int): Number of neighbours for KNN
         threshold (float): Threshold
+        min_samples (int): Minimum samples in a non-fuzzy cluster
         num_proc (int): Number of process to run simultaneously
     """
     n_samples: int = len(features)
@@ -75,7 +76,7 @@ def cluster_aroc(features, n_neighbours, threshold, num_proc=4):
 
         clusters.append(group)
 
-    return _convert_clusters_to_ndarray(clusters, n_samples)
+    return _convert_clusters_to_ndarray(clusters, n_samples, min_samples)
 
 
 def _pairwise_distance(neighbor_lookup, row_no):
@@ -114,9 +115,15 @@ def _pairwise_distance(neighbor_lookup, row_no):
     return distance
 
 
-def _convert_clusters_to_ndarray(clusters: list[set], n_samples: int) -> np.ndarray:
+def _convert_clusters_to_ndarray(
+    clusters: list[set], n_samples: int, min_samples: int
+) -> np.ndarray:
     cluster_labels: np.ndarray = np.empty(n_samples)
     for i, cluster in enumerate(clusters):
-        for sample in cluster:
-            cluster_labels[sample] = i
+        if len(cluster) < min_samples:
+            for sample in cluster:
+                cluster_labels[sample] = -1
+        else:
+            for sample in cluster:
+                cluster_labels[sample] = i
     return cluster_labels

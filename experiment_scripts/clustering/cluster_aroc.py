@@ -15,11 +15,15 @@ aroc_folder_path = f"{feature_folder_path}/clustering/aroc"
 os.makedirs(aroc_folder_path)
 
 n_neighbours_space = [200]
-threshold_space = [0.1, 0.2, 0.3]
+# threshold_space = [0.1, 0.2, 0.3]
+threshold_space = [0.2]
+min_samples_space = [2, 5, 10, 20, 50, 100]
 
-for i, (n_neighbours, threshold) in enumerate(
-    product(n_neighbours_space, threshold_space)
+for i, (n_neighbours, threshold, min_samples) in enumerate(
+    product(n_neighbours_space, threshold_space, min_samples_space)
 ):
-    clustering = AROClustering(n_neighbours=n_neighbours, threshold=threshold)
+    clustering = AROClustering(
+        n_neighbours=n_neighbours, threshold=threshold, min_samples=min_samples
+    )
     clustering.cluster(feature_folder_path)
     clustering.save_cluster_labels(f"{aroc_folder_path}/run_{i}")

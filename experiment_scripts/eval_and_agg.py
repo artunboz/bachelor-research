@@ -36,6 +36,7 @@ all_results_df = pd.DataFrame(
     columns=[
         "name",
         "image_count",
+        "non_fuzzy_count",
         # "silhouette",
         # "davies_bouldin",
         "precision",
