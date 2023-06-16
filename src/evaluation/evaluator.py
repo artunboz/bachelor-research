@@ -61,6 +61,7 @@ class Evaluator:
             test_image_actual_labels,
             test_image_cluster_labels,
         ) = self._remove_fuzzy_labels()
+        self.scores["test_image_count"] = len(test_image_actual_labels)
 
         # self.scores["silhouette"] = silhouette_score(features, cluster_labels)
         # self.scores["davies_bouldin"] = davies_bouldin_score(features, cluster_labels)
