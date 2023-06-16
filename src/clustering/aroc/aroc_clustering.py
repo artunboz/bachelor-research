@@ -25,7 +25,7 @@ class AROClustering(AbstractClustering):
         :return: A 1-d numpy array of shape containing the cluster label for each sample
             in the same order as the input array.
         """
-        features: np.ndarray = np.load(f"{features_dir}/features.npy")
+        features: np.ndarray = np.load(f"{features_dir}/features.npy").astype("int32")
         self.cluster_labels = aroc(
             features, self.n_neighbours, self.threshold, self.num_proc
         )
