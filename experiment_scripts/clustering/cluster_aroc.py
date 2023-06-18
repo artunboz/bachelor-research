@@ -15,7 +15,7 @@ aroc_folder_path = f"{feature_folder_path}/clustering/aroc"
 os.makedirs(aroc_folder_path)
 
 n_neighbours_space = [100]
-threshold_space = [0.1, 0.2, 0.5, 1, 2]
+threshold_space = [1, 1.3, 1.5, 1.7, 1.9]
 # min_samples_space = [1, 2, 5, 10, 20, 50, 100]
 min_samples_space = [1]
 
