@@ -14,6 +14,8 @@ from src.evaluation import metrics
 class Evaluator:
     def __init__(
         self,
+        do_internal: bool,
+        do_external: bool,
         features_path: str,
         cluster_labels_folder_path: str,
         image_names_path: str,
@@ -21,6 +23,10 @@ class Evaluator:
     ) -> None:
         """Inits an Evaluator instance.
 
+        :param do_internal: A boolean indicating whether the Evaluator will compute
+            internal evaluation metrics (silhouette and davies-bouldin).
+        :param do_external: A boolean indicating whether the Evaluator will compute
+            external evaluation metrics (precision, recall, f1).
         :param features_path: A string indicating the path of the features file.
         :param cluster_labels_folder_path: A string indicating the folder containing the
             cluster labels.
@@ -29,6 +35,8 @@ class Evaluator:
         :param ground_truth_path: A string indicating the file containing the ground
             truth.
         """
+        self.do_internal: bool = do_internal
+        self.do_external: bool = do_external
         self.features_path: str = features_path
         self.cluster_labels_folder_path: str = cluster_labels_folder_path
         self.image_names_path: str = image_names_path
@@ -62,18 +70,22 @@ class Evaluator:
         ) = self._remove_fuzzy_labels()
         self.scores["cluster_count"] = len(np.unique(cluster_labels))
 
-        # self.scores["silhouette"] = silhouette_score(features, cluster_labels)
-        # self.scores["davies_bouldin"] = davies_bouldin_score(features, cluster_labels)
+        if self.do_internal:
+            self.scores["silhouette"] = silhouette_score(features, cluster_labels)
+            self.scores["davies_bouldin"] = davies_bouldin_score(
+                features, cluster_labels
+            )
 
-        self.scores["precision"] = metrics.pairwise_precision(
-            self.test_image_actual_labels, self.test_image_cluster_labels
-        )
-        self.scores["recall"] = metrics.pairwise_recall(
-            self.test_image_actual_labels, self.test_image_cluster_labels
-        )
-        self.scores["f1"] = metrics.pairwise_f1_from_precision_and_recall(
-            self.scores["precision"], self.scores["recall"]
-        )
+        if self.do_external:
+            self.scores["precision"] = metrics.pairwise_precision(
+                self.test_image_actual_labels, self.test_image_cluster_labels
+            )
+            self.scores["recall"] = metrics.pairwise_recall(
+                self.test_image_actual_labels, self.test_image_cluster_labels
+            )
+            self.scores["f1"] = metrics.pairwise_f1_from_precision_and_recall(
+                self.scores["precision"], self.scores["recall"]
+            )
 
     def save_metrics(self) -> None:
         """Saves the scores in JSON format to the self.cluster_labels_folder_path
