@@ -11,6 +11,13 @@ csv_files = [
     "pca",
     "autoencoder",
 ]
+labels = [
+    "first feature",
+    "second feature",
+    "combined feature and no reduction",
+    "combined feature reduced with pca",
+    "combined feature reduced with autoencoder",
+]
 
 # Read the CSV files and store the data in a list of DataFrames
 dataframes = []
@@ -36,7 +43,7 @@ fig, ax = plt.subplots(figsize=(20, 6))
 for i, df in enumerate(dataframes):
     values = df.iloc[:, 1].values
     x_pos = [group_gap * x + (i * (bar_width + bar_gap)) for x in index]
-    ax.bar(x_pos, values, bar_width, label=csv_files[i])
+    ax.bar(x_pos, values, bar_width, label=labels[i])
 
 for bars in ax.containers:
     ax.bar_label(bars)

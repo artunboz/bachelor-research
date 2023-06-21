@@ -140,19 +140,3 @@ class Detector:
             )
         )
         plt.show()
-
-    def latent_pass(self, image_path):
-        # Prepare the image
-        img = cv2.imread(image_path)
-        h, w, c = img.shape
-        img, _ = self.transformer(img, None, self.resize_size)
-        scale = min(self.resize_size[0] / h, self.resize_size[1] / w)
-
-        # Predict
-        img_cu = torch.Tensor(copy.deepcopy(img)).unsqueeze(0).cuda()
-        with torch.no_grad():
-            fpn_outs = self.model.backbone(img_cu)
-            fpn_outs = self.model.head_stem(fpn_outs)
-            foutputs = self.model.face_head(fpn_outs)
-            # for i in range(3):
-            #     print(foutputs[i].shape)

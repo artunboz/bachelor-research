@@ -5,8 +5,8 @@ from the panels, and save them.
 import os
 
 from paths import DATA_DIR
-from panel_and_text_extraction.panel_extractor import PanelExtractor
-from panel_and_text_extraction.text_cropper import TextCropper
+from panel_removal_and_text_extraction.panel_extractor import PanelExtractor
+from panel_removal_and_text_extraction.text_cropper import TextCropper
 
 input_folder_path = f"{DATA_DIR}/dilbert_comics_original"
 output_folder_path = f"{DATA_DIR}/cleaned_panels"
