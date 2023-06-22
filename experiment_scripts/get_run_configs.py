@@ -7,11 +7,11 @@ import pandas as pd
 from paths import DATA_DIR
 
 parser = ArgumentParser()
-parser.add_argument("--feature-path", dest="feature_path")
+parser.add_argument("--path")
 parser.add_argument("--config-name", dest="config_name")
 args = parser.parse_args()
 
-root_folder = f"{DATA_DIR}/{args.feature_path}"
+root_folder = f"{DATA_DIR}/{args.path}"
 
 combined_results = []
 for run in sorted(os.listdir(root_folder)):

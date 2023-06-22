@@ -17,7 +17,7 @@ os.makedirs(aroc_folder_path)
 n_neighbours_space = [100]
 threshold_space = [1000, 2000, 5000, 10000]
 # min_samples_space = [1, 2, 5, 10, 20, 50, 100]
-min_samples_space = [1]
+min_samples_space = [100]
 
 for i, (n_neighbours, threshold, min_samples) in enumerate(
     product(n_neighbours_space, threshold_space, min_samples_space)

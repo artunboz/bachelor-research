@@ -18,7 +18,7 @@ eval_folders = sorted(os.listdir(root_folder))
 for folder in tqdm(eval_folders, desc="Configurations"):
     folder_path = f"{root_folder}/{folder}"
     clustering_folder_path = f"{folder_path}/clustering"
-    kmeans_folder_path = f"{clustering_folder_path}/kmeans"
+    kmeans_folder_path = f"{clustering_folder_path}/kmeans/run_0"
 
     if not os.path.isdir(clustering_folder_path):
         os.mkdir(clustering_folder_path)
