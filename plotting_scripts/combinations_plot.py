@@ -39,7 +39,7 @@ total_width = (bar_width + bar_gap) * len(csv_files)
 index = range(num_rows)
 
 # Create the bar chart
-fig, ax = plt.subplots(figsize=(20, 6))
+fig, ax = plt.subplots(figsize=(20, 4.5))
 for i, df in enumerate(dataframes):
     values = df.iloc[:, 1].values
     x_pos = [group_gap * x + (i * (bar_width + bar_gap)) for x in index]
