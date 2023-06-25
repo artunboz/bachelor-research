@@ -1,5 +1,5 @@
-from pipeline.detector import Detector
-from pipeline.extractor import extract_images
+from face_extraction.face_detection_and_extraction.detector import Detector
+from face_extraction.face_detection_and_extraction.extractor import extract_images
 
 image_folder_path = "/home/artun/Desktop/research_project/research/data/cleaned_panels/panels"
 

@@ -1,4 +1,4 @@
-"""This module contains the files needed for character face detection and extraction
+"""This package contains the files needed for character face detection and extraction
 using the model developed by https://github.com/barisbatuhan/DASS_Det_Inference/tree/main
 
 Since the authors did not release the model as a pypi package, I cloned the repo
