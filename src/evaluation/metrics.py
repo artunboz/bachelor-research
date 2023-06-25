@@ -15,19 +15,28 @@ def pairwise_f1(actual_labels: np.ndarray, cluster_labels: np.ndarray) -> float:
 
 
 def pairwise_f1_from_precision_and_recall(precision: float, recall: float) -> float:
-    return (2 * precision * recall) / (precision + recall)
+    if precision + recall == 0:
+        return 0
+    else:
+        return (2 * precision * recall) / (precision + recall)
 
 
 def pairwise_precision(actual_labels: np.ndarray, cluster_labels: np.ndarray) -> float:
     tp: int = _true_positive(actual_labels, cluster_labels)
     fp: int = _false_positive(actual_labels, cluster_labels)
-    return tp / (tp + fp)
+    if tp + fp == 0:
+        return 0
+    else:
+        return tp / (tp + fp)
 
 
 def pairwise_recall(actual_labels: np.ndarray, cluster_labels: np.ndarray) -> float:
     tp: int = _true_positive(actual_labels, cluster_labels)
     fn: int = _false_negative(actual_labels, cluster_labels)
-    return tp / (tp + fn)
+    if tp + fn == 0:
+        return 0
+    else:
+        return tp / (tp + fn)
 
 
 def _true_positive(actual_labels: np.ndarray, cluster_labels: np.ndarray) -> int:

@@ -39,7 +39,7 @@ class AbstractClustering(ABC):
             raise ValueError("The clustering has not been done yet.")
 
         if not os.path.isdir(save_folder_path):
-            os.mkdir(save_folder_path)
+            os.makedirs(save_folder_path)
 
         with open(f"{save_folder_path}/clustering_config.json", mode="w") as f:
             json.dump(self.get_config(), f)
