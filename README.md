@@ -10,15 +10,12 @@ Contains the classes used in the face clustering pipeline, which is visualized b
 
 ![face_clustering_pipeline](figures/face_clustering_pipeline.png)
 
-The pipeline is made up of 3 steps:
+The pipeline is made up of 4 steps:
 
 1. feature extraction
-2. (optional) dimensionality reduction
-3. clustering.
-
-Each step has its own package, and each package contains abstract classes that are
-responsible with common tasks. These abstract classes can be extended with other
-algorithms.
+2. (optional) feature combination
+3. (optional) dimensionality reduction
+4. clustering.
 
 The steps of the pipeline agree on a common folder structure. Below is an example
 folder structure.
@@ -84,6 +81,15 @@ different configurations. Each configuration is contained in its own folder, suc
 `reductions/pca/run_0` and `reductions/pca/run_1`. The evaluation is done and the
 results are aggregated using `experiment_scripts/eval_and_agg.py`. The configurations
 are aggregated using `experiment_scripts/get_run_configs.py`.
+
+Steps 1, 3, and 4 have their own package and abstract classes that are responsible with
+common tasks. These abstract classes can be extended to accommodate more algorithms. For
+step 2, `features/combine_features.py` is used. This module operates on multiple feature
+folders. It is responsible with collecting the configurations of each feature under a
+single config file, identifying the images for which each feature method has a feature
+vector, concatenating these feature vectors per image, and storing them in the same
+folder structure. Thus, the combined feature can be treated as any other feature in the
+later steps of the pipeline.
 
 ### Notes on Features
 
