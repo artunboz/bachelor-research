@@ -6,7 +6,7 @@ This repository contains the code used for the
 
 ## Installation
 
-Python 3.10.11 is used. One can install the requirements by running
+Python 3.10.11 is used. One can install the requirements by running the following command.
 
 ```bash
 pip install -r requirements.txt
