@@ -1,10 +1,22 @@
 # Clustering Faces of Comic Characters
 
-This repository contains the code used for [link coming once the paper is uploaded to tu delft repo].
+This repository contains the code used for the
+[paper](http://resolver.tudelft.nl/uuid:2b64704d-d510-437d-a599-c9751ffa2426)
+"Clustering Faces of Comic Characters: An Experimental Investigation."
+
+## Installation
+
+Python 3.10.11 is used. One can install the requirements by running
+
+```bash
+pip install -r requirements.txt
+```
+
+## Structure of the Repository
 
 Below is the structure of the repository.
 
-## src
+### src
 
 Contains the classes used in the face clustering pipeline, which is visualized below.
 
@@ -91,7 +103,7 @@ vector, concatenating these feature vectors per image, and storing them in the s
 folder structure. Thus, the combined feature can be treated as any other feature in the
 later steps of the pipeline.
 
-### Notes on Features
+#### Notes on Features
 
 Each feature class is responsible with its own preprocessing, which must take place in
 the `read_image` method of `AbstractFeature`.
@@ -102,7 +114,7 @@ LBP features. Local features refer to methods that produce a variable number of 
 per image. These vectors are transformed into a single fixed-size vector using a vector
 quantization method such as fisher vectors. Examples include ORB and SIFT features.
 
-## face_extraction
+### face_extraction
 
 Contains the code for the face extraction pipeline, which is visualized below.
 
@@ -122,12 +134,12 @@ so it must be installed as a separate repository. You can add the modules found 
 `face_detection_and_extraction/run.py` to run the face detection and extraction steps of
 the pipeline.
 
-## experiment_scripts
+### experiment_scripts
 
 Contains scripts for running the steps of the face clustering pipeline. It also contains
 other scripts that I used to produce the results of the paper.
 
-## mmselfsup_simclr
+### mmselfsup_simclr
 
 For the training of SimCLR, I used mmselfsup library. The exact configuration I used is
 contained in `training_config.py`. You can use `get_latent_vectors.py` to embed images
