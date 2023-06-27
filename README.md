@@ -2,11 +2,15 @@
 
 This repository contains the code used for the
 [paper](http://resolver.tudelft.nl/uuid:2b64704d-d510-437d-a599-c9751ffa2426)
-"Clustering Faces of Comic Characters: An Experimental Investigation."
+"Clustering Faces of Comic Characters: An Experimental Investigation." I wrote this
+paper as my bachelor thesis for the 2023 edition of the course
+[Research Project](https://github.com/TU-Delft-CSE/Research-Project) at
+[TU Delft](https://github.com/TU-Delft-CSE).
 
 ## Installation
 
-Python 3.10.11 is used. One can install the requirements by running the following command.
+Python 3.10.11 is used. One can install the requirements by running the following
+command.
 
 ```bash
 pip install -r requirements.txt
