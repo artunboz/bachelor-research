@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from paths import DATA_DIR
+from paths import DATA_DIR, ROOT_DIR
 
-# List of CSV file names
 csv_files = [
     "first_feature",
     "second_feature",
@@ -16,29 +15,24 @@ labels = [
     "second feature",
     "combined feature and no reduction",
     "combined feature reduced with pca",
-    "combined feature reduced with autoencoder",
+    "combined feature reduced with neural autoencoder",
 ]
 
-# Read the CSV files and store the data in a list of DataFrames
 dataframes = []
 for file in csv_files:
     df = pd.read_csv(f"{DATA_DIR}/results/combinations/2/{file}.csv")
     dataframes.append(df)
 
-# Extract the row names and column values
 row_names = df.iloc[:, 0].values
 num_rows = len(row_names)
 
-# Set the width of each bar and the gap between bars
 bar_width = 0.23
 bar_gap = 0.1
 group_gap = 2
 
-# Calculate the total width of each set of bars
 total_width = (bar_width + bar_gap) * len(csv_files)
 index = range(num_rows)
 
-# Create the bar chart
 fig, ax = plt.subplots(figsize=(20, 4.5))
 for i, df in enumerate(dataframes):
     values = df.iloc[:, 1].values
@@ -48,16 +42,14 @@ for i, df in enumerate(dataframes):
 for bars in ax.containers:
     ax.bar_label(bars)
 
-# Set the x-axis tick positions and labels
 ax.set_xticks([group_gap * x + (total_width / 2) - 0.18 for x in index])
 ax.set_xticklabels(row_names)
 
-# Set the axis labels and the chart title
 ax.set_xlabel("Combination")
 ax.set_ylabel("F1 Score")
+ax.set_title("A Comparison of Feature Combinations Based on K-Means++")
 
-# Add a legend
 ax.legend()
 
-# Display the bar chart
-plt.show()
+# plt.show()
+plt.savefig(f"{ROOT_DIR}/figures/combinations_f1.svg")
