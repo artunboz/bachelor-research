@@ -43,7 +43,7 @@ grpcio-status==1.54.0
 h5py==3.8.0
 hdbscan==0.8.29
 huggingface-hub==0.15.1
-idna==3.4
+idna==3.7
 imageio==2.28.1
 iniconfig==2.0.0
 ipykernel==6.23.0
